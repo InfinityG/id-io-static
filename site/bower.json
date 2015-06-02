@@ -1,0 +1,18 @@
+{
+  "name": "Idyrium",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "font-awesome": "4.x",
+    "bootstrap": "3.x",
+    "owlcarousel":"1.x",
+    "modernizr":"2.x",
+    "parsleyjs":"2.x",
+    "shufflejs":"3.x",
+    "wow":"1.x",
+    "html5shiv":"3.x",
+    "respond":"1.x",
+    "animate.css":"3.x",
+    "source-sans-pro":"http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700"
+  }
+}

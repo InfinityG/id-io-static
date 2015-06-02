@@ -1,0 +1,90 @@
+<section class="section container-fluid">
+    <h1 class="page-header">My wallet</h1>
+
+    <div class="scrollable">
+        <div class="scrollable-content">
+            <div class="section">
+
+                <h2>trusted web apps</h2>
+
+                <div class="panel panel-default" ng-model="context">
+
+                    <div class="panel-heading">
+                        <div class="fa fa-unlock fa-2x">
+                        </div>
+                        <span class="fa fa-2x pull-right">login</span>
+                    </div>
+
+                    <div class="panel-body">
+                        <form name="loginForm" novalidate>
+
+                            <p>
+                                Select a trusted third party to login to. Third party sites have a trust set up
+                                between them and the ID-IO API. Logging in via ID-IO uses a 'Single-Sign-On' mechanism.
+                            </p>
+
+                            <div class="input-group input-group-lg">
+                                        <span class="input-group-addon dropdown-toggle" ui-turn-on='contractDropdown'>
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </span>
+                                <input type="text" class="form-control" placeholder="Select a 3rd party"
+                                       aria-label="Reason"
+                                       ng-model="currentContract.name"/>
+                            </div>
+
+                            <ul class="dropdown-menu"
+                                ui-outer-click="Ui.turnOff('contractDropdown')"
+                                ui-outer-click-if="Ui.active('contractDropdown')"
+                                role="menu"
+                                ui-show="contractDropdown"
+                                ui-state="contractDropdown"
+                                ui-turn-off="contractDropdown">
+
+                                <li ng-list="['www.test.com']" ng-repeat="site in list}">
+                                    <a>{{site}}</a>
+                                </li>
+                            </ul>
+
+                            <br/>
+
+                            <div class="input-group input-group-lg">
+
+                                <span class="input-group-addon fa fa-user"></span>
+                                <input type="text" class="form-control" name="userName" aria-label="Email"
+                                       placeholder="Username" ng-model="userName" required="true"/>
+                            </div>
+                            <span style="color:red"
+                                  ng-show="loginForm.userName.$dirty && loginForm.userName.$invalid">
+                                              Username is required!
+                                        </span>
+
+                            <br/>
+
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon fa fa-key"></span>
+                                <input type="password" class="form-control" name="password"
+                                       aria-label="Password"
+                                       placeholder="Password" ng-model="password" required="true"/>
+                            </div>
+
+                            <span style="color:red"
+                                  ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
+                                              Password is required!
+                                        </span>
+
+                            <div class="input-group input-group-lg pull-right" ng-show="loginForm.$valid">
+                                <br/>
+                                <button type="button" class="btn btn-primary btn-lg"
+                                        ng-click="login(userName, password);">login
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <modal redirect='true'></modal>
+</section>

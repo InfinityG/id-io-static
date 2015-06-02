@@ -1,0 +1,125 @@
+<section class="section container-fluid">
+    <h1 class="page-header">Register</h1>
+
+    <div class="scrollable">
+        <div class="scrollable-content">
+            <div class="section">
+
+                <!--*********************-->
+                <!-- REGISTER -->
+                <!--*********************-->
+
+                <h2>register</h2>
+
+                <div class="panel panel-default" ng-show="context == null">
+
+                    <div class="panel-heading justified">
+                        <span class="fa fa-pencil fa-2x"></span>
+                        <span class="fa fa-2x text-right">your details</span>
+                    </div>
+
+                    <div class="panel-body">
+                        <!--<div class="input-group input-group-lg">-->
+                            <h5>
+                                Registration will create a new identity for you on the blockchain. It will also
+                                create an encrypted offline wallet in your browser storage to keep your keys safe.
+                            </h5>
+                        <!--</div>-->
+
+                        <form name="registrationForm">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon fa fa-user"></span>
+                                <input type="text" class="form-control" aria-label="Username" name="userName"
+                                       placeholder="Username" ng-model="userName" required="true"/>
+
+                            </div>
+                                    <span style="color:red"
+                                          ng-show="registrationForm.userName.$dirty && registrationForm.userName.$invalid">
+                                              Invalid username
+                                        </span>
+
+                            <br/>
+
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon fa fa-key"></span>
+                                <input type="password" class="form-control" aria-label="Password"
+                                       name="password"
+                                       placeholder="Password" ng-model="password" required="true"
+                                       ng-minlength="5" ng-maxlength="20"/>
+                                <span class="input-group-addon fa fa-question-circle"></span>
+
+                            </div>
+                                     <span style="color:red"
+                                           ng-show="registrationForm.password.$dirty && registrationForm.password.$invalid">
+                                              Invalid password
+                                        </span>
+
+                            <br/>
+
+                            <!-- Keys -->
+
+                            <div class="panel panel-default" ng-show="context == null;">
+
+                                <div class="panel-heading justified">
+                                    <span class="fa fa-key fa-2x"></span>
+                                    <span class="fa fa-2x text-right">your keys</span>
+                                </div>
+                                <div class="panel-body">
+                                    <h5>
+                                        Please make sure that you make a copy of these keys and save them in a secure location.
+                                        You will need them if you ever need to restore your wallet.
+                                    </h5>
+
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon fa fa-key">&nbsp;public</span>
+                                        <input type="text" class="form-control" placeholder="Public key"
+                                               aria-label="PublicKey" name="publicKey" required="true"
+                                               ng-model="publicKey" disabled/>
+                                        <span class="input-group-addon fa fa-copy"></span>
+                                    </div>
+
+                                    <br/>
+
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon fa fa-key">&nbsp;secret</span>
+                                        <input type="text" class="form-control" placeholder="Secret key"
+                                               aria-label="SecretKey" name="secretKey" required="true"
+                                               ng-model="secretKey" disabled/>
+                                        <span class="input-group-addon fa fa-copy" ng-click="test()"></span>
+                                    </div>
+
+
+                                    <!--<div class="input-group input-group-lg pull-right">-->
+                                        <!--<button type="button"-->
+                                                <!--class="btn btn-default btn-lg"-->
+                                                <!--ng-click="generateKeys();">-->
+                                            <!--generate keys-->
+                                        <!--</button>-->
+                                    <!--</div>-->
+
+                                </div>
+
+
+                            </div>
+                            <!--</div>-->
+
+
+                            <!--</div>-->
+
+                            <div class="input-group input-group-lg pull-right">
+                                <button type="button" ng-show="registrationForm.$valid"
+                                        class="btn btn-primary btn-lg"
+                                        ng-click="register(userName, password, publicKey, secretKey);">
+                                    register
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <modal redirect='true'></modal>
+</section>

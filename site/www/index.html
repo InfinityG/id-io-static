@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>id-io</title>
+
+    <script type="application/javascript">
+        var breakFrame = function(){
+            if (top.location != self.location) {
+                top.location = self.location.href + '?ref=org';
+            }
+        };
+
+        breakFrame();
+    </script>
+
+    <link href="css/app.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="pagewrapper">
+
+    <section id="menu" class="">
+
+        <div class="pagelogo">
+            <img class="logo" src="img/thumb.svg"/>
+            <a href="#intro" class="scroll">
+                <strong>id-io</strong></a>
+        </div>
+        <div class="menuswitch">
+            <span class="visible-xs"></span>
+            <a href="#" id="menuswitcher">
+                <span class="fa fa-bars"></span>
+            </a>
+        </div>
+        <div class="navigation">
+            <ul class="nav">
+                <li><a href="#textcontent" class="scroll"><span class="fa fa-check"></span> About</a></li>
+                <li><a href="#grid" class="scroll"><span class="fa fa-rocket"></span> Features</a></li>
+                <li><a href="#applications" class="scroll"><span class="fa fa-cube"></span> Applications</a></li>
+                <li><a href="#licensing" class="scroll"><span class="fa fa-certificate"></span> Licensing</a></li>
+                <li><a href="#carousel-2" class="scroll"><span class="fa fa-users"></span> Team</a></li>
+                <li><a href="#contact" class="scroll"><span class="fa fa-envelope-o"></span> Contact</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="intro" class="slidepage image-background">
+        <div class="bgWrap dimBg">
+            <div class="container">
+
+                <div class="col-md-10 col-md-offset-1 vertical-center">
+                    <div class="text-center margin-offset animated bounceInDown">
+                        <div class="special-element center"><span></span></div>
+                        <h2>Your Universal Core Identity Service</h2>
+
+                        <h1>id-io</h1>
+
+                        <p>
+                            <a class="btn scroll" href="#textcontent">FIND OUT MORE</a>
+                        </p>
+
+                    </div>
+                </div>
+                <a class="scrolldown scroll btn-scroll" href="#textcontent"><span class="fa fa-arrow-down"></span></a>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="textcontent" class="slidepage image-background">
+        <div class="bgWrap dimBg">
+            <div class="container">
+
+                <div class="col-md-10 col-md-offset-2">
+                    <div class="content wow slideInUp animated" data-wow-duration="0.6s">
+                        <div class="special-element"><span></span></div>
+                        <h1>About</h1>
+
+                        <div class="row grid-row">
+                            <div class="wow fadeInLeft animated">
+                                <div class="col-md-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-users"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4>What is <strong>id-io</strong>?</h4>
+
+                                    <p>
+
+                                    <ul>
+                                        <li>A simple yet powerful <a
+                                                href="http://en.wikipedia.org/wiki/Federated_identity"><i>Federated
+                                            Identity</i></a> Provider
+                                        </li>
+                                        <li>Provides a non-proprietary 'Single Sign On' ('SSO') service</li>
+                                        <li>Securely and privately stores client registries and personal meta-data
+                                        </li>
+                                        <li>A core authentication mechanism for all your digitally connected applications
+                                        </li>
+                                        <li>The  primary record is encrypted and stored on a cryptographically secure, distributed ledger
+                                            (<a href="http://en.wikipedia.org/wiki/Block_chain_(transaction_database)">"blockchain"</a>)
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="wow fadeInRight animated" data-wow-delay="0.2s">
+                                <div class="col-md-1 col-md-offset-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-question-circle"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4>Why use it?</h4>
+
+                                    <ul>
+                                        <li>Open Source, so you can see the code. Fork it from Github for your own use.
+                                            Extend and improve
+                                        </li>
+                                        <li>Simple to install and use</li>
+                                        <li>Built with Ruby and Sinatra, using modern coding standards. Deployable with
+                                            Docker onto Linux platforms
+                                        </li>
+                                        <li>Cryptographically secure - uses 256 bit encryption and signing algorithms
+                                        </li>
+                                        <li>Built to securely manage private core identities on the blockchain
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <a class="scrolldown scroll btn-scroll" href="#grid"><span class="fa fa-arrow-down"></span></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="grid" class="slidepage image-background">
+        <div class="bgWrap dimBg">
+            <div class="container">
+
+                <div class="col-md-10 col-md-offset-2">
+                    <div class="content">
+                        <div class="special-element"><span></span></div>
+                        <h1>Features</h1>
+
+                        <div class="row grid-row">
+                            <div class="wow fadeInLeft animated">
+                                <div class="col-md-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-code"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4>A RESTful API which supports</h4>
+
+                                    <p>
+                                    <ul>
+                                        <li>Creation of trusts between <strong>id-io</strong> API and Relying Parties
+                                        </li>
+                                        <li>Registration of user identities</li>
+                                        <li>Authentication of users</li>
+                                        <li>Generation of signed and encrypted tokens for consumption by Relying
+                                            Parties
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="wow fadeInRight animated" data-wow-delay="0.2s">
+                                <div class="col-md-1 col-md-offset-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-user"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4>Basic SSO Functionality</h4>
+
+                                    <p>
+                                    <ul>
+                                        <li>Supports username/password AND username/signature combinations</li>
+                                        <li>Generates encrypted and signed tokens with limited lifespan</li>
+                                        <li>Token data includes role information</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row grid-row">
+                            <div class="wow fadeInLeft animated" data-wow-delay="0.4s">
+                                <div class="col-md-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-lock"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4>Strong Encryption</h4>
+
+                                    <p>
+                                    <ul>
+                                        <li>Tokens are signed with an ECDSA private key</li>
+                                        <li>Tokens are encrypted with a shared 256 bit AES key specific to relying
+                                            party
+                                        </li>
+                                    </ul>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="wow fadeInRight animated" data-wow-delay="0.6s">
+                                <div class="col-md-1 col-md-offset-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-puzzle-piece"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4>Relying Party Support</h4>
+
+                                    <p>
+                                    <ul>
+                                        <li>Tokens generated by the API can be parsed by relying parties using
+                                            'ig-identity-rp-validator' Ruby gem
+                                        </li>
+                                    </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row grid-row">
+                            <div class="wow fadeInLeft animated" data-wow-delay="0.4s">
+                                <div class="col-md-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-database"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4>Identity Storage</h4>
+
+                                    <p>
+                                    <ul>
+                                        <li> Local: MongoDB is used as the backing store for identities</li>
+                                        <li> Distributed: A blockchain is used for public identity storage
+                                            (still in development)
+                                        </li>
+                                    </ul>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="wow fadeInRight animated" data-wow-delay="0.6s">
+                                <div class="col-md-1 col-md-offset-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-rocket"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4>Webhooks</h4>
+
+                                    <p>
+                                    <ul>
+                                        <li>Registrations on the API support a Webhook callback mechanism on successful
+                                            registration
+                                        </li>
+                                    </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <a class="scrolldown scroll btn-scroll" href="#applications"><span class="fa fa-arrow-down"></span></a>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="applications" class="slidepage image-background">
+        <div class="bgWrap dimBg">
+            <div class="container">
+
+                <div class="col-md-10 col-md-offset-2">
+                    <div class="content">
+                        <div class="special-element"><span></span></div>
+                        <h1>Applications</h1>
+
+                        <div class="row grid-row">
+                            <div id="applicationsContent" class="wow fadeInLeft animated">
+                                <div class='col-md-1 col-sm-1 col-xs-3'><span class='fa fa-2x fa-cube'></span></div>
+
+                                <div id="innov" class='col-md-4 col-sm-5 col-xs-9'>
+                                    <img class='innov' src='img/innov_edge.png'/>
+                                    <h4><a href='http://www.innovationedge.org.za'>Innovation Edge (South Africa)</a>
+                                    </h4>
+
+                                    <p>
+                                    <ul>
+                                        <li>Provides a Core Identity Registry for children in poor communities who will
+                                            receive Early Childhood Development Services, through a scalable social
+                                            franchise model
+                                        </li>
+                                        <li>Manages registration and authentication of Care Providers, Franchise
+                                            Operators and Beneficiaries, deployed through a mobile phone gateway
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div id="dgmt" class='col-md-4 col-sm-5 col-xs-9'>
+                                    <img class='dgmt' src='img/dgmt.svg'/>
+                                    <h4><a href='http://www.dgmt.co.za'>D.G. Murray Trust (South Africa)</a></h4>
+
+                                    <p>
+                                    <ul>
+                                        <li>Provides a Core Identity Registry for children in poor communities who will
+                                            receive Early Childhood Development Services, through a scalable social
+                                            franchise model
+                                        </li>
+                                        <li>Manages registration and authentication of Care Providers, Franchise
+                                            Operators and Beneficiaries, deployed through a mobile phone gateway
+                                        </li>
+                                        <li>Developed with grant support from the <a
+                                                href='http://www.innovationedge.org.za/'>
+                                            <i>Innovation Edge Fund</i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <a class="scrolldown scroll btn-scroll" href="#licensing"><span class="fa fa-arrow-down"></span></a>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="licensing" class="slidepage image-background">
+        <div class="bgWrap dimBg">
+            <div class="container">
+
+                <div class="col-md-10 col-md-offset-2">
+                    <div class="content">
+                        <div class="special-element"><span></span></div>
+                        <h1>Licensing Models</h1>
+
+                        <div class="row grid-row">
+                            <div class="wow fadeInLeft animated">
+                                <div class="col-md-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-user"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4>Self-hosted</h4>
+
+                                    <p>
+                                    <ul>
+                                        <li>Forking the repo and self-hosting comes with all the normal warnings and
+                                            caveats
+                                        </li>
+                                        <li>The license is MIT</li>
+                                        <li>See the <a href="#"><i class="fa fa-github-alt"></i>&nbsp;<i>Github</i></a>
+                                            repo
+                                            for more information
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="wow fadeInRight animated" data-wow-delay="0.2s">
+                                <div class="col-md-1 col-md-offset-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-code"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4>Self-hosted (supported)</h4>
+
+                                    <p>
+                                    <ul>
+                                        <li>This is self-hosting (see above) but with developer support</li>
+                                        <li>Support pricing is based on a monthly subscription</li>
+                                        <li>Please contact us directly to find out more</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row grid-row">
+                            <div class="wow fadeInLeft animated" data-wow-delay="0.4s">
+                                <div class="col-md-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-server"></span>
+                                </div>
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4>Hosted</h4>
+
+                                    <p>
+                                    <ul>
+                                        <li>Hosted service, offering tiered pricing based on monthly volumes
+                                        </li>
+                                        <li>Pricing information available soon</li>
+                                        <li>Please contact us directly to find out more</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="wow fadeInRight animated" data-wow-delay="0.2s">
+                                <div class="col-md-1 col-md-offset-1 col-sm-1 col-xs-3">
+                                    <span class="fa fa-2x fa-child"></span>
+                                </div>
+
+                                <div class="col-md-4 col-sm-5 col-xs-9">
+                                    <h4> Non-profit (social benefit)</h4>
+
+                                    <p>
+                                    <ul>
+                                        <li>Either self-hosted (with support charged at cost), or fully hosted (at
+                                            cost)
+                                        </li>
+                                        <li>Please contact us directly to find out more</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <a class="scrolldown scroll btn-scroll" href="#carousel-2"><span class="fa fa-arrow-down"></span></a>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="carousel-2" class="slidepage image-background">
+        <div class="bgWrap dimBg">
+            <div class="container">
+
+                <div class="col-md-10 col-md-offset-2">
+                    <div class="content">
+                        <div class="special-element"><span></span></div>
+                        <h1>Team</h1>
+
+                        <!-- Carousel content -->
+                        <div id="owl-example" class="carousel-items clearfix owl-carousel">
+                            <div class="carousel-item">
+                                <img src="img/grant.jpg" width="286" height="215" class="img-responsive"/>
+
+                                <div class="item-info">
+                                    <h2>Grant Pidwell</h2>
+
+                                    <h3>- Lead Developer | Innovator -</h3>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="img/shaun.jpg" width="286" height="215" class="img-responsive"/>
+
+                                <div class="item-info">
+                                    <h2>Shaun Conway</h2>
+
+                                    <h3>- Medical Doctor | Disruptor -</h3>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a class="scrolldown scroll btn-scroll" href="#contact"><span class="fa fa-arrow-down"></span></a>
+
+            </div>
+        </div>
+    </section>
+
+
+    <section id="contact" class="slidepage image-background">
+        <div class="bgWrap dimBg">
+            <div class="container">
+
+                <div class="col-md-10 col-md-offset-2">
+                    <div class="content">
+                        <div class="special-element"><span></span></div>
+                        <h1>Contact
+                            <small>send us a message</small>
+                        </h1>
+
+                        <div class="row">
+                            <div id="comContact" class="col-md-3 col-sm-4 col-text-right">
+                                <address>
+                                    <!--6th Some Street<br/>-->
+                                    <!--851 01 Bratislava<br/>-->
+                                    <!--Slovak republic<br/>-->
+                                    <!--<br/>-->
+                                    <!--<abbr title="Phone">+44(0) 7796 202039</abbr><br/>-->
+
+                                    <script>document.write('<' + 'a' + ' ' + 'h' + 'r' + 'e' + 'f' + '=' + "'" + 'm' + 'a' + 'i' + 'l' + 't' + 'o' + '&' + '#' + '5' + '8' + ';' + 'e' + 'n' + '&' + '#' + '1' +
+                                            '1' + '3' + ';' + 'u' + 'i' + 'r' + 'i' + '&' + '#' + '1' + '0' + '1' + ';' + 's' + '&' + '#' + '6' + '4' + ';' + 'i' + 'd' + '-' + '&' + '#' + '1' +
+                                            '0' + '5' + ';' + 'o' + '&' + '#' + '4' + '6' + ';' + '&' + '#' + '9' + '9' + ';' + '%' + '6' + 'F' + 'm' + "'" + '>' + 'e' + 'n' + 'q' + '&' + '#' +
+                                            '1' + '1' + '7' + ';' + 'i' + 'r' + 'i' + 'e' + 's' + '&' + '#' + '6' + '4' + ';' + 'i' + '&' + '#' + '1' + '0' + '0' + ';' + '-' + '&' + '#' + '1' +
+                                            '0' + '5' + ';' + '&' + '#' + '1' + '1' + '1' + ';' + '&' + '#' + '4' + '6' + ';' + '&' + '#' + '9' + '9' + ';' + 'o' + 'm' + '<' + '/' + 'a' + '>'
+                                    );</script>
+                                    <noscript>[Turn on JavaScript to see the email address]</noscript>
+                                </address>
+                            </div>
+
+                            <div id="orgContact" class="col-md-3 col-sm-4 col-text-right">
+                                <address>
+                                    <script>document.write('<' + 'a' + ' ' + 'h' + 'r' + 'e' + 'f' + '=' + "'" + 'm' + 'a' + 'i' + 'l' + 't' + 'o' + '&' + '#' + '5' + '8' + ';' + '&' + '#' + '1' + '0' + '1' +
+                                    ';' + '&' + '#' + '3' + '7' + ';' + '6' + '&' + '#' + '6' + '9' + ';' + '%' + '&' + '#' + '5' + '5' + ';' + '&' + '#' + '4' + '9' + ';' + 'u' + '%' +
+                                    '6' + '&' + '#' + '5' + '7' + ';' + '&' + '#' + '1' + '1' + '4' + ';' + 'i' + '&' + '#' + '3' + '7' + ';' + '6' + '&' + '#' + '5' + '3' + ';' + 's' +
+                                    '&' + '#' + '6' + '4' + ';' + 'i' + 'd' + '%' + '&' + '#' + '5' + '0' + ';' + 'D' + 'i' + '%' + '6' + 'F' + '&' + '#' + '4' + '6' + ';' + '&' + '#' +
+                                    '1' + '1' + '1' + ';' + '&' + '#' + '3' + '7' + ';' + '7' + '2' + 'g' + "'" + '>' + 'e' + '&' + '#' + '1' + '1' + '0' + ';' + 'q' + 'u' + 'i' + 'r' +
+                                    '&' + '#' + '1' + '0' + '5' + ';' + 'e' + 's' + '&' + '#' + '6' + '4' + ';' + 'i' + 'd' + '&' + '#' + '4' + '5' + ';' + 'i' + 'o' + '&' + '#' + '4' +
+                                    '6' + ';' + 'o' + 'r' + 'g' + '<' + '/' + 'a' + '>');</script>
+                                    <noscript>[Turn on JavaScript to see the email address]</noscript>
+                                </address>
+                            </div>
+                            <!--<div class="col-md-8 col-sm-8">-->
+                            <!--<form class="js-contact-form" role="form" action="mail/contact.php" method="post"-->
+                            <!--data-parsley-validate>-->
+                            <!--<div class="form-group name">-->
+                            <!--<input name="name" type="name" class="form-control name" id="exampleInputName1"-->
+                            <!--placeholder="Enter name..." required>-->
+                            <!--&lt;!&ndash; <span class="form-error">please enter name</span> &ndash;&gt;-->
+                            <!--</div>-->
+                            <!--<div class="form-group email">-->
+                            <!--<input name="email" type="email" class="form-control email"-->
+                            <!--id="exampleInputEmail1" placeholder="Enter email..." required>-->
+                            <!--</div>-->
+                            <!--<div class="form-group message">-->
+                            <!--<textarea name="message" class="form-control message" rows="4"-->
+                            <!--placeholder="Message" required></textarea>-->
+                            <!--&lt;!&ndash; <span class="form-error">please enter message</span> &ndash;&gt;-->
+                            <!--</div>-->
+
+                            <!--<button type="submit" class="btn btn-default">SEND MESSAGE</button>-->
+
+                            <!--<div id="msgInfo"></div>-->
+                            <!--</form>-->
+                            <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+
+                <a class="scrolldown scroll btn-scroll" href="#intro"><span class="fa fa-arrow-up"></span></a>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="footer">
+        <div class="container">
+            <div class="col-md-7 col-sm-6 col-xs-12">
+                <p>
+                    &copy; Infinity-G Ltd. All rights reserved<br/>
+                </p>
+            </div>
+            <div class="col-md-5 col-sm-6 col-xs-12">
+                <p>
+                    <!--<a href="http://facebook.com" class="btn btn-sm soc" target="_blank"><span-->
+                    <!--class="fa fa-facebook"></span></a>-->
+                    <!--<a href="http://twitter.com" class="btn btn-sm soc" target="_blank"><span-->
+                    <!--class="fa fa-twitter"></span></a>-->
+                    <!--<a href="http://instagram.com" class="btn btn-sm soc" target="_blank"><span class="fa fa-instagram"></span></a> -->
+                    <!--<a href="http://youtube.com" class="btn btn-sm soc" target="_blank"><span class="fa fa-youtube"></span></a> -->
+                </p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- Modals -->
+<!--<div class="modal fade" id="modalText" tabindex="-1" role="dialog" aria-labelledby="modalText" aria-hidden="true">-->
+<!--<div class="modal-dialog">-->
+<!--<div class="modal-content">-->
+<!--<div class="modal-header">-->
+<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+<!--<h4 class="modal-title" id="myModalLabel">Modal title</h4>-->
+<!--</div>-->
+<!--<div class="modal-body">-->
+<!--<p><span class="big-icon fa fa-desktop"></span> Fresh is a fully responsive, modern one page template. It contains all basic features for your content. It's full of fresh colors which can attract users. All images are included in theme and there are free to use and modify. Or there is also possiblity to use your own background images too.</p>-->
+
+<!--<p>Template is available in 2 variations. First variation with background images and second with colour gradients. You can choose which one fit for you better, or you can simple change colors and gradients in less file. Or you can change provided images with your own.</p>-->
+<!---->
+<!--<p>Template contains multiple features. For exmple 2 alternatives for carousel, images gallery, animations, form with validations and others.</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="modal fade" id="modalImage" tabindex="-1" role="dialog" aria-labelledby="modalImage" aria-hidden="true">-->
+<!--<div class="modal-dialog">-->
+<!--<div class="modal-content">-->
+<!--<div class="modal-header">-->
+<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>-->
+<!--<h4 class="modal-title" id="myModalLabel">Image title</h4>-->
+<!--</div>-->
+<!--<div class="modal-body"></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<div class="options">
+    <div class="more closed">
+        <span class="fa fa-github-alt"><a href="http://www.github.com/infinity-g"></a></span>
+    </div>
+</div>
+
+<!-- Javscripts -->
+<script src="js/app.min.js"></script>
+
+<!-- Google analytics -->
+<!--<script>-->
+<!--(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){-->
+<!--(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),-->
+<!--m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)-->
+<!--})(window,document,'script','//www.google-analytics.com/analytics.js','ga');-->
+
+<!--ga('create', 'UA-377791-7', 'auto');-->
+<!--ga('send', 'pageview');-->
+<!--</script>-->
+
+</body>
+</html>

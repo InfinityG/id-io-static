@@ -1,0 +1,6 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea
+wallet/bower_components
+wallet/node_modules
+site/bower_components
+site/node_modules
