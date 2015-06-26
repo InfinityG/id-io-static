@@ -10,3 +10,10 @@
   * Sinatra (Ruby web server) is used to serve the site
     * The 'routes' directory contains the entry points 
     * Only serves static files from the 'www' directory
+    
+## To build site:
+
+- npm install
+- bower install
+- gulp
+
