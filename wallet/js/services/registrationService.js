@@ -4,76 +4,91 @@
 (function () {
 
     var injectParams = ['$http', '$rootScope', 'config', 'tokenService', 'keyService',
-                            'cryptoService', 'blobService', 'localStorageService'];
+        'cryptoService', 'blobService', 'localStorageService'];
 
     var registrationFactory = function ($http, $rootScope, config, tokenService, keyService,
                                         cryptoService, blobService, localStorageService) {
 
         var identityBase = config.identityHost, nacl = config.nacl, factory = {};
 
-        factory.generateKeys = function(){
-          return keyService.generateSigningKeyPair();
+        factory.generateKeys = function () {
+            return keyService.generateSigningKeyPair();
         };
 
-        factory.register = function (userName, password, publicKey, secretKey) {
+        factory.register = function (firstName, lastName, userName, password, publicKey, secretKey) {
 
-            var userData = {username: userName, password: password};
+            var userData = {
+                first_name: firstName,
+                last_name: lastName,
+                username: userName,
+                password: password,
+                public_key: publicKey
+            };
 
-            //return $http.post(identityBase + '/users', userData, {'withCredentials': false})
-            //    .then(function (response) {
-            //        var data = response.data;
-            //
-            //        //generate an AES key
-            //        var cryptoKey = keyService.generateAESKey(password, nacl);
-            //
-            //        //encrypt the secret
-            //        var encryptedSecret = cryptoService.encryptString(cryptoKey, secretKey);
-            //
-            //        //generate wallet
-            //        var wallet = {keys: {pk: publicKey, sk: encryptedSecret}};
-            //
-            //        //save in local storage
-            //        localStorageService.saveWallet(userName, wallet);
-            //
-            //        //emit this to be used for encrypting newly generated secret signing keys
-            //        $rootScope.$broadcast('registrationEvent', {userId: data.id, key: cryptoKey});
-            //
-            //    });
+            return $http.post(identityBase + '/users', userData, {'withCredentials': false})
+                .then(function (response) {
+                    var data = response.data;
 
-            //check the user doesn't already exist (TODO: this needs to check both localstorage and the blockchain)
-            var wallet = localStorageService.getWallet(userName);
+                    //generate an AES key
+                    var cryptoKey = keyService.generateAESKey(password, nacl);
 
-            if(wallet != null){
-                $rootScope.$broadcast('registrationEvent', {
-                    type: 'Error',
-                    message: 'Username already exists!'
+                    //encrypt the secret
+                    var encryptedSecret = cryptoService.encryptString(cryptoKey, secretKey);
+
+                    //generate wallet
+                    var wallet = {keys: {pk: publicKey, sk: encryptedSecret}};
+
+                    //initialize blob for the user
+                    blobService.initializeBlob(userName);
+
+                    //save in local storage
+                    localStorageService.saveWallet(userName, wallet);
+
+                    //emit this to be used for encrypting newly generated secret signing keys
+                    //$rootScope.$broadcast('registrationEvent', {userId: data.id, key: cryptoKey});
+
+                    $rootScope.$broadcast('registrationEvent', {
+                        type: 'Success',
+                        message: 'User registration successful!',
+                        userName: userName,
+                        key: cryptoKey
+                    });
+
                 });
 
-                return;
-            }
-
-
-            //initialize blob for the user
-            blobService.initializeBlob(userName);
-
-            //generate an AES key
-            var cryptoKey = keyService.generateAESKey(password, nacl);
-
-            //encrypt the secret
-            var encryptedSecret = cryptoService.encryptString(cryptoKey, secretKey);
-
-            //generate wallet
-            var wallet = {keys: {pk: publicKey, sk: encryptedSecret}};
-
-            //save in local storage
-            localStorageService.saveWallet(userName, wallet);
-
-            $rootScope.$broadcast('registrationEvent', {
-                type: 'Success',
-                message: 'User registration successful!',
-                userName: userName,
-                key: cryptoKey
-            });
+            ////check the user doesn't already exist (TODO: this needs to check both localstorage and the blockchain)
+            //var wallet = localStorageService.getWallet(userName);
+            //
+            //if(wallet != null){
+            //    $rootScope.$broadcast('registrationEvent', {
+            //        type: 'Error',
+            //        message: 'Username already exists!'
+            //    });
+            //
+            //    return;
+            //}
+            //
+            ////initialize blob for the user
+            //blobService.initializeBlob(userName);
+            //
+            ////generate an AES key
+            //var cryptoKey = keyService.generateAESKey(password, nacl);
+            //
+            ////encrypt the secret
+            //var encryptedSecret = cryptoService.encryptString(cryptoKey, secretKey);
+            //
+            ////generate wallet
+            //var wallet = {keys: {pk: publicKey, sk: encryptedSecret}};
+            //
+            ////save in local storage
+            //localStorageService.saveWallet(userName, wallet);
+            //
+            //$rootScope.$broadcast('registrationEvent', {
+            //    type: 'Success',
+            //    message: 'User registration successful!',
+            //    userName: userName,
+            //    key: cryptoKey
+            //});
         };
 
         return factory;

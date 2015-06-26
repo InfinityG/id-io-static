@@ -32,7 +32,7 @@
                         });
                         break;
                     default :
-                        $rootScope.$broadcast('contractEvent', {
+                        $rootScope.$broadcast('errorEvent', {
                             type: 'Error',
                             status: rejection.status,
                             message: rejection.data

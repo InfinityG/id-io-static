@@ -6,7 +6,7 @@
     var injectParams = ['$http', '$rootScope', '$location', 'contextService', 'blobService'];
 
     var configValue = {
-        identityHost: 'http://localhost:9002',
+        identityHost: 'https://id-io.infinity-g.com',
         confirmMobile: false,
         nacl: '9612700b954743e0b38f2faff35d264c',
         context: null

@@ -4,6 +4,8 @@
 
     var RegistrationController = function ($scope, $location, $routeParams, $window, localStorageService, registrationService) {
 
+        $scope.firstName = null;
+        $scope.lastName = null;
         $scope.userName = null;
         $scope.password = null;
         $scope.context = null;
@@ -22,8 +24,8 @@
             alert('OK');
         };
 
-        $scope.register = function (userName, password, publicKey, secretKey) {
-            registrationService.register(userName, password, publicKey, secretKey);
+        $scope.register = function (firstName, lastName, userName, password, publicKey, secretKey) {
+            registrationService.register(firstName, lastName, userName, password, publicKey, secretKey);
         };
 
         init();

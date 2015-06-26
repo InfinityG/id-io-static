@@ -18,6 +18,10 @@
             }
         };
 
+        var errorEventListener = $rootScope.$on('errorEvent', function (event, args) {
+                showModal(args.type, args.message, 0, null);
+        });
+
         var loginEventListener = $rootScope.$on('loginEvent', function (event, args) {
             if(args.type == 'Error')
                 showModal(args.type, args.message, 0, '/wallet');
@@ -43,6 +47,7 @@
 
         //clean up rootScope listeners
         $scope.$on('$destroy', function() {
+            errorEventListener();
             loginEventListener();
             registrationEventListener();
             walletUpdateEventListener();

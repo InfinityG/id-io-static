@@ -29,6 +29,32 @@
                         <form name="registrationForm">
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon fa fa-user"></span>
+                                <input type="text" class="form-control" aria-label="First name" name="firstName"
+                                       placeholder="First name" ng-model="firstName" required="true"/>
+
+                            </div>
+                                    <span style="color:red"
+                                          ng-show="registrationForm.firstName.$dirty && registrationForm.firstName.$invalid">
+                                              Invalid first name
+                                        </span>
+
+                            <br/>
+
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon fa fa-user"></span>
+                                <input type="text" class="form-control" aria-label="Last name" name="lastName"
+                                       placeholder="Last name" ng-model="lastName" required="true"/>
+
+                            </div>
+                                    <span style="color:red"
+                                          ng-show="registrationForm.lastName.$dirty && registrationForm.lastName.$invalid">
+                                              Invalid last name
+                                        </span>
+
+                            <br/>
+
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon fa fa-user"></span>
                                 <input type="text" class="form-control" aria-label="Username" name="userName"
                                        placeholder="Username" ng-model="userName" required="true"/>
 
@@ -46,7 +72,7 @@
                                        name="password"
                                        placeholder="Password" ng-model="password" required="true"
                                        ng-minlength="5" ng-maxlength="20"/>
-                                <span class="input-group-addon fa fa-question-circle"></span>
+                                <!--<span class="input-group-addon fa fa-question-circle"></span>-->
 
                             </div>
                                      <span style="color:red"
@@ -109,7 +135,7 @@
                             <div class="input-group input-group-lg pull-right">
                                 <button type="button" ng-show="registrationForm.$valid"
                                         class="btn btn-primary btn-lg"
-                                        ng-click="register(userName, password, publicKey, secretKey);">
+                                        ng-click="register(firstName, lastName, userName, password, publicKey, secretKey);">
                                     register
                                 </button>
                             </div>

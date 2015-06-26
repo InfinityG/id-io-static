@@ -2,5 +2,6 @@
 .idea
 wallet/bower_components
 wallet/node_modules
+wallet/www
 site/bower_components
 site/node_modules
