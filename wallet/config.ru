@@ -10,7 +10,7 @@ require './app'
 require 'webrick'
 
 options = {
-    :Host => 'localhost',
+    :Host => '0.0.0.0',
     :Port => 8000
 }
 

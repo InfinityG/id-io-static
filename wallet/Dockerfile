@@ -33,6 +33,7 @@ RUN git clone git@github.com:InfinityG/id-io-static.git /home/id-io-static
 WORKDIR /home/id-io-static/wallet
 
 ### Install NodeJS, npm, Bower, Gulp ###
+
 RUN apt-get update
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:chris-lea/node.js
@@ -42,6 +43,8 @@ RUN npm install gulp -g
 
 ### Build the static site ###
 
+RUN npm install
+RUN bower install --allow-root
 RUN gulp build
 
 ### Install Ruby dependencies ###
@@ -53,6 +56,7 @@ RUN bundler install
 EXPOSE 8000
 
 CMD rackup
+#CMD ['bin/bash']
 
 # To build: sudo docker build -t infinityg/id-io-wallet:v1 .
 # To run: sudo docker run -it --rm infinityg/id-io-wallet:v1
