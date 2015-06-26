@@ -33,7 +33,7 @@ RUN git clone git@github.com:InfinityG/id-io-static.git /home/id-io-static
 WORKDIR /home/id-io-static/wallet
 
 ### Install NodeJS, npm, Bower, Gulp ###
-
+RUN apt-get update
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:chris-lea/node.js
 RUN apt-get update && apt-get install -y curl wget git nodejs
