@@ -179,7 +179,7 @@ gulp.task('html', function() {
 gulp.task('less', function () {
   gulp.src(['less/app.less', 'less/responsive.less'])
     .pipe(less({
-      paths: [ path.resolve(__dirname, 'less'), path.resolve(__dirname, 'bower_components') ]
+      paths: [ 'less', 'bower_components' ]
     }))
     .pipe(mobilizer('app.css', {
       'app.css': {
