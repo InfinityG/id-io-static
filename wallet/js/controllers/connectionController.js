@@ -5,13 +5,20 @@
     var ConnectionController = function ($scope, $location, $routeParams, $window, localStorageService, connectionService) {
 
         $scope.connections = null;
+        $scope.connectionUserName = null;
+        $scope.connectionId = null;
+        $scope.password = null;
 
         function init(){
             $scope.connections = connectionService.getConnections();
         }
 
-        $scope.confirm = function (connectionId, password) {
-            connectionService.confirmConnection(connectionId, password);
+        $scope.connect = function () {
+            connectionService.createConnection($scope.connectionUserName, $scope.password);
+        };
+
+        $scope.confirm = function () {
+            connectionService.confirmConnection($scope.connectionId, $scope.password);
         };
 
         init();

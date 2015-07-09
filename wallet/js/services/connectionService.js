@@ -32,6 +32,23 @@
                 });
         };
 
+        factory.createConnection = function (connectionUserName, password) {
+            var context = userService.getContext();
+            var requestData = generateCreationPayload(connectionUserName, password);
+
+            return $http.post(identityBase + '/connections', requestData, {headers: {'Authorization': context.token}})
+                .then(function (response) {
+                    var data = response.data;
+                    //localStorageService.saveConnection(context.userName, data);
+
+                    $rootScope.$broadcast('connectionCreatedEvent', {
+                        type: 'Success',
+                        status: response.status,
+                        message: 'Connection confirmed'
+                    });
+                });
+        };
+
         factory.confirmConnection = function (connectionId, password) {
             var context = userService.getContext();
             var requestData = generateConfirmationPayload(password);
@@ -49,18 +66,33 @@
                 });
         };
 
-        function generateConfirmationPayload(password) {
-            // get the decrypted key
-            var cryptoKey = keyService.generateAESKey(password, nacl);
-            var encryptedSecret = localStorageService.getKeyPair().sk;
-            var secret = cryptoService.decrypt(cryptoKey, encryptedSecret);
+        function generateCreationPayload(connectionUsername, password) {
+            var context = userService.getContext();
+            var secret = keyService.getSecretKey(context.userName, password);
 
             // generate a digest, then sign it...
-            var digest = cryptoService.createMessageDigest(context.username);
-            var secretBuffer = cryptoService.base64Decode(secret);
-            var signature = cryptoService.signMessage(digest, secretBuffer);
+            var digest = cryptoService.createMessageDigest(connectionUsername);
+            var signature = cryptoService.signMessage(digest, secret);
 
-            return {"data": digest.toString('base64'), "signature": signature.toString('base64')};
+            return {
+                "username": connectionUsername,
+                "digest": digest.toString('base64'),
+                "signature": signature.toString('base64')
+            };
+        }
+
+        function generateConfirmationPayload(password) {
+            var context = userService.getContext();
+            var secret = keyService.getSecretKey(context.userName, password);
+
+            // generate a digest, then sign it...
+            var digest = cryptoService.createMessageDigest(context.userName);
+            var signature = cryptoService.signMessage(digest, secret);
+
+            return {
+                "digest": digest.toString('base64'),
+                "signature": signature.toString('base64')
+            };
         }
 
         return factory;

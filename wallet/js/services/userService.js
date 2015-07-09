@@ -15,7 +15,7 @@
             return sessionStorageService.getAuthToken();
         };
 
-        factory.deleteToken = function () {
+        factory.logout = function () {
             var result = sessionStorageService.deleteAuthToken();
             $rootScope.$broadcast('logoutEvent', {result: result});
             return result;

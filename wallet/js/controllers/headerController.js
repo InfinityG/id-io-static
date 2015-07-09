@@ -1,18 +1,18 @@
 (function () {
 
-    var injectParams = ['$scope', '$rootScope', '$location', '$routeParams', 'contextService'];
+    var injectParams = ['$scope', '$rootScope', '$location', '$routeParams', 'userService'];
 
-    var HeaderController = function ($scope, $rootScope, $location, $routeParams, contextService) {
+    var HeaderController = function ($scope, $rootScope, $location, $routeParams, userService) {
 
         $scope.userName = null;
 
         function init(){
-            var context = contextService.getContext();
+            var context = userService.getContext();
             $scope.userName = context == null ? null : context.userName;
         }
 
         $scope.logout = function(){
-            contextService.deleteContext();
+            userService.logout();
             $scope.userName = null;
 
             $rootScope.$broadcast('logoutEvent');

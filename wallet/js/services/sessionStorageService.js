@@ -13,8 +13,8 @@
             return JSON.parse(sessionStorage.getItem('id-io.token'));
         };
 
-        factory.saveAuthToken = function(username, userId, externalId, role, token){
-            return sessionStorage.setItem('id-io.token', JSON.stringify({username: username, userId: userId,
+        factory.saveAuthToken = function(userName, userId, externalId, role, token){
+            return sessionStorage.setItem('id-io.token', JSON.stringify({userName: userName, userId: userId,
                                             externalId : externalId, role: role, token: token}));
         };
 

@@ -16,11 +16,10 @@
             'responseError': function (rejection) {
                 switch (rejection.status) {
                     case 401:
-                        $rootScope.$broadcast('contractEvent', {
+                        $rootScope.$broadcast('unauthorizedEvent', {
                                 type: 'Error',
                                 status: rejection.status,
-                                message: rejection.data,
-                                redirectUri: '/login'
+                                message: rejection.data
                             }
                         );
                         break;
