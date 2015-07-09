@@ -1,8 +1,9 @@
 (function () {
 
-    var injectParams = ['$scope', '$location', '$routeParams', '$window', 'config', 'tokenService', 'keyService', 'cryptoService', 'walletService'];
+    var injectParams = ['$scope', '$location', '$routeParams', '$window', 'config', 'userService', 'keyService',
+        'cryptoService', 'walletService'];
 
-    var SettingsController = function ($scope, $location, $routeParams, $window, config, tokenService, keyService,
+    var SettingsController = function ($scope, $location, $routeParams, $window, config, userService, keyService,
                                        cryptoService, walletService) {
 
         $scope.currentKeyPair = null;
@@ -12,7 +13,7 @@
         $scope.cryptoKey = null;
 
         function init() {
-            var context = tokenService.getContext();
+            var context = userService.getContext();
 
             if (context == null || context == '')
                 $location.path('/login');

@@ -30,6 +30,8 @@ module Sinatra
             content_type 'image/jpeg'
           when 'svg'
             content_type 'image/svg+xml'
+          when 'ico'
+            content_type 'text/html'
           else
             content_type 'image/gif'
         end

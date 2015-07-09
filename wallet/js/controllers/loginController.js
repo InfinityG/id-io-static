@@ -1,8 +1,8 @@
 (function () {
 
-    var injectParams = ['$scope', '$location', '$routeParams', '$window', 'tokenService', 'registrationService'];
+    var injectParams = ['$scope', '$location', '$routeParams', '$window', 'userService', 'registrationService'];
 
-    var LoginController = function ($scope, $location, $routeParams, $window, tokenService, registrationService) {
+    var LoginController = function ($scope, $location, $routeParams, $window, userService, registrationService) {
 
         $scope.firstName = null;
         $scope.lastName = null;
@@ -17,7 +17,7 @@
             if($routeParams.exit != null)
                 $scope.deleteToken();
             else
-                $scope.context = tokenService.getContext();
+                $scope.context = userService.getContext();
         }
 
         $scope.roleSelected = function(role){
@@ -25,11 +25,11 @@
         };
 
         $scope.login = function (userName, password) {
-            tokenService.login(userName, password);
+            userService.login(userName, password);
         };
 
         $scope.deleteToken = function () {
-            tokenService.deleteToken();
+            userService.deleteToken();
         };
 
         $scope.register = function (firstName, lastName, userName, password, mobile, role) {

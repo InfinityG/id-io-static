@@ -3,17 +3,25 @@
  */
 (function () {
 
-    var injectParams = ['$rootScope', 'contextService', 'localStorageService'];
+    var injectParams = ['$rootScope', 'config', 'contextService', 'keyService', 'cryptoService', 'localStorageService'];
 
-    var walletFactory = function ($rootScope, contextService, localStorageService) {
+    var walletFactory = function ($rootScope, config, contextService, keyService, cryptoService, localStorageService) {
 
-        var factory = {};
+        var nacl = config.nacl, factory = {};
 
-        factory.getWallet = function(userName){
+        factory.getWallet = function (userName) {
             return localStorageService.getWallet(userName);
         };
 
-        factory.saveWallet = function(wallet){
+        factory.generateWallet = function (userName, password, publicKey, secretKey) {
+            var cryptoKey = keyService.generateAESKey(password, nacl);
+            var encryptedSecret = cryptoService.encryptSecret(cryptoKey, secretKey);
+            var wallet = {keys: {pk: publicKey.toString('base64'), sk: encryptedSecret}};
+
+            localStorageService.saveWallet(userName, wallet);
+        };
+
+        factory.saveWallet = function (wallet) {
             var userName = contextService.getContext().userName;
             localStorageService.saveWallet(userName, wallet);
         };

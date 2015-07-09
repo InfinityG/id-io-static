@@ -1,9 +1,9 @@
 (function () {
-    var injectParams = ['localStorageService', 'sessionStorageService'];
+    var injectParams = ['config', 'localStorageService', 'cryptoService', 'sessionStorageService'];
 
-    var keyFactory = function (localStorageService, sessionStorageService) {
+    var keyFactory = function (config, localStorageService, cryptoService, sessionStorageService) {
 
-        var factory = {};
+        var nacl = config.nacl, factory = {};
 
         /*
          WALLET SECRET KEY SHARING
@@ -29,15 +29,7 @@
          */
 
         factory.generateSigningKeyPair = function () {
-            // based on CryptocoinJS (http://cryptocoinjs.com/)
-
-            var sr = require('secure-random');
-            var CoinKey = require('coinkey');
-
-            var privateKey = sr.randomBuffer(32);
-            var ck = new CoinKey(privateKey, true); // true => compressed public key / addresses
-
-            return {pk: ck.publicKey.toString('base64'), sk: privateKey.toString('base64')};
+            return cryptoService.createSigningKeyPair();
         };
 
         factory.getSigningKeyPair = function (userName) {
@@ -48,25 +40,24 @@
             localStorageService.saveKeyPair(userName, pair);
         };
 
+        factory.getSecretKey = function(userName, password){
+            var cryptoKey = cryptoService.generateAESKey(password, nacl);
+            var encryptedSecret = factory.getSigningKeyPair(userName).sk;
+            return cryptoService.decryptSecret(cryptoKey, encryptedSecret);
+        };
+
         /*
          SYMMETRIC ENCRYPTION - AES key generation
          */
 
         factory.generateAESKey = function (password, salt) {
-            // use pbkdf2 to convert variable password length to 256 bit hash,
-            // split into 8 bytes of 32 bits each
-            var pbkdf2 = require('pbkdf2-sha256');
-            var buffer = pbkdf2(password, salt, 1, 8);
-            var hash = buffer.toString();
-            return factory.textToIntArray(hash);
+            return cryptoUtil.AES.generateAESKey(password, salt);
         };
 
-        factory.textToIntArray = function (s) {
-            var ua = [];
-            for (var i = 0; i < s.length; i++) {
-                ua[i] = s.charCodeAt(i);
-            }
-            return ua;
+        factory.validateCredentials = function(userName, password){
+            var cryptoKey = cryptoService.generateAESKey(password, nacl);
+            var encryptedSecret = factory.getSigningKeyPair(userName).sk;
+            return cryptoService.validateAESKey(cryptoKey, encryptedSecret);
         };
 
         return factory;

@@ -49,6 +49,68 @@
             factory.saveBlob(blob);
         };
 
+        /*
+         CONNECTIONS
+         */
+
+        factory.getConnections = function (userName) {
+            var blob = factory.getBlob(userName);
+            var result = blob.connections;
+
+            result.sort(function (a, b) {
+                return a.first_name > b.first_name;
+            });
+
+            return result;
+        };
+
+        factory.saveConnections = function (userName, connections) {
+            var blob = factory.getBlob(userName);
+            blob.connections = connections;
+            factory.saveBlob(userName, blob);
+        };
+
+        factory.saveConnection = function (userName, connection) {
+            var blob = factory.getBlob(userName);
+            var connections = blob.connections;
+
+            // if this is an update, then remove and re-add
+            if(connection.id != null && connection.id > 0)
+            {
+                for(var x=0; x<connections.length; x++){
+                    if(connections[x].id == connection.id){
+                        connections.splice(x, 1);
+                        break;
+                    }
+                }
+            }
+
+            connections.push(connection);
+            factory.saveBlob(userName, blob);
+        };
+
+        factory.getConnection = function (userName, id) {
+            var connections = factory.getConnections(userName);
+
+            for (var i = 0; i < connections.length; i++) {
+                if (connections[i].id == id)
+                    return connections[i];
+            }
+        };
+
+        factory.deleteConnection = function (userName, id) {
+            var blob = factory.getBlob(userName);
+            var connections = blob.connections;
+
+            for (var i = 0; i < connections.length; i++) {
+                if (connections[i].id == id) {
+                    connections.splice(i, 1);
+                }
+            }
+
+            factory.saveBlob(userName, blob);
+        };
+
         ///*
         // SS_KEYS
         // */

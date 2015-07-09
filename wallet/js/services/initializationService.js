@@ -3,16 +3,18 @@
  */
 (function () {
 
-    var injectParams = ['$http', '$rootScope', '$location', 'contextService', 'blobService'];
+    var injectParams = ['$http', '$rootScope', '$location', 'contextService', 'connectionService', 'blobService'];
 
     var configValue = {
-        identityHost: 'https://id-io.infinity-g.com',
+        //identityHost: 'https://id-io.infinity-g.com',
+        identityHost: 'http://localhost:9002',
+        loginDomain: 'id-io',
         confirmMobile: false,
         nacl: '9612700b954743e0b38f2faff35d264c',
         context: null
     };
 
-    var initializationFactory = function ($http, $rootScope, $location, contextService, blobService) {
+    var initializationFactory = function ($http, $rootScope, $location, contextService, connectionService, blobService) {
         var factory = {};
 
         factory.init = function(){
@@ -47,6 +49,7 @@
         factory.setupListener = function() {
             $rootScope.$on('loginEvent', function (event, args) {
                 //factory.start(args.key);
+                connectionService.refreshConnections();
             });
 
             $rootScope.$on('logoutEvent', function (event, args) {

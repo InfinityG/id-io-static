@@ -1,9 +1,9 @@
 (function () {
 
-    var injectParams = ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'config', 'contextService',
+    var injectParams = ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'config', 'userService', 'contextService',
         'keyService', 'cryptoService', 'localStorageService'];
 
-    var WalletController = function ($scope, $rootScope, $location, $routeParams, $window, config, contextService,
+    var WalletController = function ($scope, $rootScope, $location, $routeParams, $window, config, userService, contextService,
                                      keyService, cryptoService, localStorageService) {
 
         $scope.currentWallet = null;
@@ -29,24 +29,26 @@
         };
 
         $scope.login = function (userName, password) {
-
             $scope.loadUserWallet(userName);
+            userService.login(userName, password);
 
-            if ($scope.currentWallet != null) {
-                $scope.validatePassword(password);
-            } else {
-                $rootScope.$broadcast('loginEvent', {
-                    type: 'Error',
-                    status: 0,
-                    message: "Invalid user!"
-                });
-                return;
-            }
-
-            if ($scope.passwordValidated)
-                $rootScope.$broadcast('loginEvent', {userName: userName});
-            else
-                $scope.reset();
+            //$scope.loadUserWallet(userName);
+            //
+            //if ($scope.currentWallet != null) {
+            //    $scope.validatePassword(password);
+            //} else {
+            //    $rootScope.$broadcast('loginEvent', {
+            //        type: 'Error',
+            //        status: 0,
+            //        message: "Invalid user!"
+            //    });
+            //    return;
+            //}
+            //
+            //if ($scope.passwordValidated)
+            //    $rootScope.$broadcast('loginEvent', {userName: userName});
+            //else
+            //    $scope.reset();
         };
 
         $scope.reset = function () {
@@ -90,8 +92,8 @@
 
         $scope.regenerateKeys = function () {
             var pair = keyService.generateSigningKeyPair();
-            $scope.publicKey = pair.pk;
-            $scope.secretKey = pair.sk;
+            $scope.publicKey = pair.pk.toString('base64');
+            $scope.secretKey = pair.sk.toString('base64');
         };
 
         $scope.saveWallet = function () {

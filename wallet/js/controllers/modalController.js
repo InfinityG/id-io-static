@@ -38,6 +38,10 @@
             showModal(args.type, args.message, 0, '/');
         });
 
+        var connectionConfirmedEventListener = $rootScope.$on('connectionConfirmedEvent', function (event, args) {
+            showModal(args.type, args.message, 0, '/connections');
+        });
+
         var encryptionEventListener = $rootScope.$on('encryptionEvent', function (event, args) {
             if(args.type == 'Error')
                 showModal(args.type, args.message, 0, '/');
@@ -51,6 +55,7 @@
             loginEventListener();
             registrationEventListener();
             walletUpdateEventListener();
+            connectionConfirmedEventListener();
             encryptionEventListener();
         });
 

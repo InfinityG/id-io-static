@@ -12,20 +12,18 @@
         $scope.publicKey = null;
         $scope.secretKey = null;
 
-        function init(){
-            //generate new keys
-            var keys = registrationService.generateKeys();
+        var keys = null;
 
-            $scope.secretKey = keys.sk;
-            $scope.publicKey = keys.pk;
+        function init() {
+            //generate new keys
+            keys = registrationService.generateKeys();
+            $scope.secretKey = keys.sk.toString('base64');
+            $scope.publicKey = keys.pk.toString('base64');
         }
 
-        $scope.test = function(){
-            alert('OK');
-        };
-
-        $scope.register = function (firstName, lastName, userName, password, publicKey, secretKey) {
-            registrationService.register(firstName, lastName, userName, password, publicKey, secretKey);
+        $scope.register = function () {
+            registrationService.register($scope.firstName, $scope.lastName, $scope.userName,
+                $scope.password, keys.pk, keys.sk);
         };
 
         init();

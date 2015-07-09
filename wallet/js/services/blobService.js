@@ -3,9 +3,9 @@
  */
 (function () {
 
-    var injectParams = ['$http', 'tokenService', 'keyService', 'cryptoService', 'localStorageService'];
+    var injectParams = ['$http', 'keyService', 'cryptoService', 'localStorageService'];
 
-    var blobFactory = function ($http, tokenService, keyService, cryptoService, localStorageService) {
+    var blobFactory = function ($http, keyService, cryptoService, localStorageService) {
 
         var factory = {};
 

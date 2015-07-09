@@ -1,0 +1,82 @@
+<section class="section container-fluid">
+    <h1 class="page-header">Connections</h1>
+
+    <div class="scrollable">
+        <div class="scrollable-content">
+            <div class="section">
+
+                <!--*********************-->
+                <!-- REGISTER -->
+                <!--*********************-->
+
+                <h2>my connections</h2>
+
+                <div class="panel panel-default" ng-show="context == null">
+
+                    <div class="panel-heading justified">
+                        <span class="fa fa-pencil fa-2x"></span>
+                        <span class="fa fa-2x text-right">connect</span>
+                    </div>
+
+                    <div class="panel-body">
+                        <!--<div class="input-group input-group-lg">-->
+                        <h5>
+                            Create a connection with another ID-IO user
+                        </h5>
+                        <!--</div>-->
+
+                        <form name="connectionForm">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon fa fa-user"></span>
+                                <input type="text" class="form-control" aria-label="Username" name="userName"
+                                       placeholder="Connection username" ng-model="userName" required="true"/>
+                            </div>
+                                    <span style="color:red"
+                                          ng-show="connectionForm.userName.$dirty && connectionForm.userName.$invalid">
+                                              Invalid username
+                                        </span>
+
+                            <div class="input-group input-group-lg pull-right">
+                                <button type="button" ng-show="connectionForm.$valid"
+                                        class="btn btn-primary btn-lg"
+                                        ng-click="connect(userName);">
+                                    register
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="panel panel-default" ng-show="context == null">
+
+                    <div class="panel-heading justified">
+                        <span class="fa fa-pencil fa-2x"></span>
+                        <span class="fa fa-2x text-right">my connections</span>
+                    </div>
+
+                    <div class="panel-body">
+                        <!--<div class="input-group input-group-lg">-->
+                        <h5>
+                            Existing connections
+                        </h5>
+                        <!--</div>-->
+
+                        <div class="list-group">
+                            <div ng-repeat="connection in connections" class="list-group-item">
+                                <span><strong>{{connection.userName + ': ' + connection.confirmed}}</strong></span>
+                    <span class="pull-right">
+                        Confirm
+                    </span>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <modal redirect='true'></modal>
+</section>

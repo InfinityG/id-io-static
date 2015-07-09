@@ -1,13 +1,13 @@
 (function () {
 
-    var injectParams = ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'tokenService'];
+    var injectParams = ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'userService'];
 
-    var SideBarController = function ($scope, $rootScope, $location, $routeParams, $window, tokenService) {
+    var SideBarController = function ($scope, $rootScope, $location, $routeParams, $window, userService) {
 
         $scope.currentRole = null;
 
         function init(){
-            var context = tokenService.getContext();
+            var context = userService.getContext();
 
             if(context != null)
                 $scope.currentRole = context.role;

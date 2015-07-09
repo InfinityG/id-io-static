@@ -22,6 +22,11 @@
                 templateUrl: 'register.html',
                 reloadOnSearch: false
             })
+            .when('/connections', {
+                controller: 'ConnectionController',
+                templateUrl: 'connections.html',
+                reloadOnSearch: false
+            })
             .when('/', {
                 controller: 'HeaderController',
                 templateUrl: 'default.html',
