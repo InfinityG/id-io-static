@@ -20,17 +20,18 @@
 
                     <div class="panel-body">
 
-                        <h3>What is the ID-IO wallet?</h3>
+                        <h3>What is the ID-IO client?</h3>
 
                         <p>
-                            The ID-IO wallet is a sample browser app that uses <a
+                            The ID-IO client is a browser app that uses <a
                                 href="https://github.com/InfinityG/id-io">ID-IO API</a>
                             to manage your identity. It demonstrates the following:
                         </p>
 
                         <ul>
                             <li><b>Registration</b> on the blockchain using the ID-IO API</li>
-                            <li>Storing your signing keys in an offline <b>wallet</b></li>
+                            <li>Stores your signing keys in an offline <b>wallet</b></li>
+                            <li>Create <b>connections</b> to other ID-IO users</li>
                             <li>Logging into a relying 3rd party website using the ID-IO <b>SSO</b> (single-sign-on)
                                 mechanism
                             </li>
@@ -38,27 +39,41 @@
                     </div>
                 </div>
 
-                <div class="panel panel-default" ng-controller="DefaultController">
+                <div class="panel panel-default" ng-controller="DefaultController" ng-show="context == null">
                     <div class="panel-heading">
                         <div class="fa fa-rocket fa-2x">
                         </div>
-                        <span class="fa fa-2x pull-right">getting started</span>
+                        <span class="fa fa-2x pull-right">start here</span>
                     </div>
 
                     <div class="panel-body">
-                        <h3>Not registered on ID-IO?</h3>
 
-                        <p>
-                            Registration will create a new identity for you on the blockchain.
-                            It will also create an encrypted offline wallet in your browser storage to keep your keys
-                            safe.
-                        </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3>Login</h3>
+                                <p>
+                                    Login to ID-IO to manage your keys and connections.
+                                </p>
+                                <button type="button" class="btn btn-primary btn-lg " ng-click="goLogin()">login
+                                </button>
 
-                        <div class="input-group input-group-lg">
-                            <button type="button" class="btn btn-primary btn-lg" ng-click="goRegister()">create my
-                                identity
-                            </button>
+                            </div>
+                            <div class="col-md-6">
+                                <h3>Not registered?</h3>
+                                <p>
+                                    Registration will create a new identity for you on the blockchain.
+                                    It will also create an encrypted offline wallet in your browser storage to keep your
+                                    keys
+                                    safe.
+                                </p>
+                                <button type="button" class="btn btn-primary btn-lg" ng-click="goRegister()">create my
+                                    identity
+                                </button>
+
+                            </div>
+
                         </div>
+
 
                     </div>
                 </div>

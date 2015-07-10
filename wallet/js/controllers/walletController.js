@@ -1,9 +1,9 @@
 (function () {
 
-    var injectParams = ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'config', 'userService', 'contextService',
+    var injectParams = ['$scope', '$rootScope', '$location', '$routeParams', '$window', 'config', 'userService',
         'keyService', 'cryptoService', 'localStorageService'];
 
-    var WalletController = function ($scope, $rootScope, $location, $routeParams, $window, config, userService, contextService,
+    var WalletController = function ($scope, $rootScope, $location, $routeParams, $window, config, userService,
                                      keyService, cryptoService, localStorageService) {
 
         $scope.currentWallet = null;
@@ -18,10 +18,12 @@
         $scope.password = null;
 
         function init() {
-            var context = contextService.getContext();
+            var context = userService.getContext();
 
             if (context != null)
                 $scope.userName = context.userName;
+            else
+                $location.path('/');
         }
 
         $scope.goRegister = function () {

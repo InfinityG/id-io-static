@@ -4,23 +4,18 @@
 
     var SideBarController = function ($scope, $rootScope, $location, $routeParams, $window, userService) {
 
-        $scope.currentRole = null;
+        $scope.context = null;
 
         function init(){
-            var context = userService.getContext();
-
-            if(context != null)
-                $scope.currentRole = context.role;
+            $scope.context = userService.getContext();
         }
 
         var loginEventListener = $rootScope.$on('loginEvent', function (event, args) {
-            $scope.currentRole = args.role;
-            console.debug('Role: ' + args.role);
+            $scope.context = userService.getContext();
         });
 
         var logoutEventListener = $rootScope.$on('logoutEvent', function (event, args) {
-            $scope.currentRole = null;
-            console.debug('Logged out!');
+            $scope.context = null;
         });
 
         //clean up rootScope listener

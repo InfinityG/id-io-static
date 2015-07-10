@@ -6,7 +6,6 @@
 
         $scope.connections = null;
         $scope.connectionUserName = null;
-        $scope.connectionId = null;
         $scope.password = null;
 
         function init(){
@@ -15,10 +14,12 @@
 
         $scope.connect = function () {
             connectionService.createConnection($scope.connectionUserName, $scope.password);
+            $scope.connections = connectionService.getConnections();
         };
 
-        $scope.confirm = function () {
-            connectionService.confirmConnection($scope.connectionId, $scope.password);
+        $scope.confirm = function (connectionId) {
+            connectionService.confirmConnection(connectionId, $scope.password);
+            $scope.connections = connectionService.getConnections();
         };
 
         init();

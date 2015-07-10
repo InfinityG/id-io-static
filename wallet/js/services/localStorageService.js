@@ -58,7 +58,7 @@
             var result = blob.connections;
 
             result.sort(function (a, b) {
-                return a.first_name > b.first_name;
+                return a.user.first_name < b.user.first_name.toLowerCase();
             });
 
             return result;

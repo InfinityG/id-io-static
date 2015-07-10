@@ -42,7 +42,7 @@
          ASYMMETRIC ENCRYPTION - ECDSA SIGNATURES
          *****************************************/
 
-        factory.generateSigningKeyAPir = function () {
+        factory.generateSigningKeyPair = function () {
             return cryptoUtil.ECDSA.createSigningKeyPair();
         };
 

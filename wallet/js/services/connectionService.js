@@ -39,7 +39,7 @@
             return $http.post(identityBase + '/connections', requestData, {headers: {'Authorization': context.token}})
                 .then(function (response) {
                     var data = response.data;
-                    //localStorageService.saveConnection(context.userName, data);
+                    localStorageService.saveConnection(context.userName, data);
 
                     $rootScope.$broadcast('connectionCreatedEvent', {
                         type: 'Success',

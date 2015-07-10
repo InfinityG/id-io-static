@@ -1,30 +1,33 @@
 (function () {
 
-    var injectParams = ['$scope', '$location', '$routeParams', '$window', 'userService', 'registrationService'];
+    var injectParams = ['$scope', '$location', '$routeParams', '$window', 'userService', 'localStorageService'];
 
-    var LoginController = function ($scope, $location, $routeParams, $window, userService, registrationService) {
+    var LoginController = function ($scope, $location, $routeParams, $window, userService, localStorageService) {
 
-        $scope.firstName = null;
-        $scope.lastName = null;
+        $scope.currentWallet = null;
+        $scope.currentKeyPair = null;
+        $scope.publicKey = null;
+        $scope.secretKey = null;
+        $scope.cryptoKey = null;
+
+        $scope.userValidated = false;
+        $scope.passwordValidated = false;
         $scope.userName = null;
         $scope.password = null;
-        $scope.mobile = null;
-        $scope.role = null;
-        $scope.roles = ['coach', 'leader', 'facilitator', 'caregiver'];
-        $scope.context = null;
 
         function init(){
+            // redirect if the user is already logged in
+            if(userService.getContext() != null)
+                $location.path('/');
+
             if($routeParams.exit != null)
                 $scope.deleteToken();
             else
                 $scope.context = userService.getContext();
         }
 
-        $scope.roleSelected = function(role){
-            $scope.role = role;
-        };
-
         $scope.login = function (userName, password) {
+            loadUserWallet(userName);
             userService.login(userName, password);
         };
 
@@ -32,9 +35,21 @@
             userService.deleteToken();
         };
 
-        $scope.register = function (firstName, lastName, userName, password, mobile, role) {
-            registrationService.register(firstName, lastName, userName, password, mobile, role);
+        $scope.goRegister = function () {
+            $location.path('/register');
         };
+
+        function loadUserWallet(userName) {
+            var wallet = localStorageService.getWallet(userName);
+
+            if (wallet != null) {
+                $scope.userName = userName;
+                $scope.currentWallet = wallet;
+                $scope.currentKeyPair = wallet.keys;
+                $scope.publicKey = wallet.keys.pk;
+                $scope.secretKey = wallet.keys.sk;
+            }
+        }
 
         init();
     };

@@ -7,9 +7,9 @@
         $httpProvider.interceptors.push('httpInterceptor');
 
         $routeProvider
-            .when('/wallet', {
-                controller: 'WalletController',
-                templateUrl: 'wallet.html',
+            .when('/login', {
+                controller: 'LoginController',
+                templateUrl: 'login.html',
                 reloadOnSearch: false
             })
              .when('/sso', {
@@ -27,10 +27,15 @@
                 templateUrl: 'connections.html',
                 reloadOnSearch: false
             })
+            .when('/wallet', {
+                controller: 'WalletController',
+                templateUrl: 'wallet.html',
+                reloadOnSearch: false
+            })
             .when('/', {
                 controller: 'HeaderController',
                 templateUrl: 'default.html',
-                reloadOnSearch: false
+                reloadOnSearch: true
             });
     });
 

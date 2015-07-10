@@ -50,6 +50,7 @@
             $rootScope.$on('loginEvent', function (event, args) {
                 //factory.start(args.key);
                 connectionService.refreshConnections();
+                $location.path('/')
             });
 
             $rootScope.$on('logoutEvent', function (event, args) {

@@ -1,8 +1,8 @@
 (function () {
 
-    var injectParams = ['$scope', '$location', '$routeParams', '$window', 'localStorageService', 'registrationService'];
+    var injectParams = ['$scope', '$location', '$routeParams', '$window', 'userService', 'localStorageService', 'registrationService'];
 
-    var RegistrationController = function ($scope, $location, $routeParams, $window, localStorageService, registrationService) {
+    var RegistrationController = function ($scope, $location, $routeParams, $window, userService, localStorageService, registrationService) {
 
         $scope.firstName = null;
         $scope.lastName = null;
@@ -15,6 +15,11 @@
         var keys = null;
 
         function init() {
+
+            // redirect if the user is already logged in
+            if(userService.getContext() != null)
+                $location.path('/');
+
             //generate new keys
             keys = registrationService.generateKeys();
             $scope.secretKey = keys.sk.toString('base64');

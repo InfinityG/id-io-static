@@ -29,7 +29,7 @@
          */
 
         factory.generateSigningKeyPair = function () {
-            return cryptoService.createSigningKeyPair();
+            return cryptoService.generateSigningKeyPair();
         };
 
         factory.getSigningKeyPair = function (userName) {

@@ -1,14 +1,18 @@
 (function () {
 
-    var injectParams = ['$scope', '$location', 'contextService'];
+    var injectParams = ['$scope', '$location', 'userService'];
 
-    var DefaultController = function ($scope, $location, contextService) {
+    var DefaultController = function ($scope, $location, userService) {
 
         $scope.context = null;
 
         function init(){
-            $scope.context = contextService.getContext();
+            $scope.context = userService.getContext();
         }
+
+        $scope.goLogin = function(){
+            $location.path('/login')
+        };
 
         $scope.goRegister = function(){
             $location.path('/register')
