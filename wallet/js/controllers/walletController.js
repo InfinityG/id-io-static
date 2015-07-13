@@ -23,7 +23,7 @@
             if (context != null)
                 $scope.userName = context.userName;
             else
-                $location.path('/');
+                $location.path('/login');
         }
 
         $scope.goRegister = function () {

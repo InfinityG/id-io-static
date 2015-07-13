@@ -55,8 +55,8 @@
         };
 
         factory.validateCredentials = function(userName, password){
-            var cryptoKey = cryptoService.generateAESKey(password, nacl);
             var encryptedSecret = factory.getSigningKeyPair(userName).sk;
+            var cryptoKey = cryptoService.generateAESKey(password, nacl);
             return cryptoService.validateAESKey(cryptoKey, encryptedSecret);
         };
 

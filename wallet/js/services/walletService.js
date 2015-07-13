@@ -16,6 +16,7 @@
         factory.generateWallet = function (userName, password, publicKey, secretKey) {
             var cryptoKey = keyService.generateAESKey(password, nacl);
             var encryptedSecret = cryptoService.encryptSecret(cryptoKey, secretKey);
+            console.debug(encryptedSecret);
             var wallet = {keys: {pk: publicKey.toString('base64'), sk: encryptedSecret}};
 
             localStorageService.saveWallet(userName, wallet);

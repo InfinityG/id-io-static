@@ -23,7 +23,7 @@
 
         factory.encryptSecret = function (cryptoKey, buffer) {
             try {
-                cryptoUtil.AES.encryptBufferToBase64(cryptoKey, buffer);
+                return cryptoUtil.AES.encryptBufferToBase64(cryptoKey, buffer);
             } catch (e) {
                 raiseEncryptionError();
             }

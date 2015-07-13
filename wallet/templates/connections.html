@@ -15,11 +15,9 @@
                     </div>
 
                     <div class="panel-body">
-                        <!--<div class="input-group input-group-lg">-->
                         <h5>
                             Request a connection with another ID-IO user
                         </h5>
-                        <!--</div>-->
 
                         <form name="connectionForm">
                             <div class="input-group input-group-lg">
@@ -31,21 +29,11 @@
                                           ng-show="connectionForm.connectionUserName.$dirty && connectionForm.connectionUserName.$invalid">
                                               Invalid username
                                         </span>
-
-                            <br/>
-
-                            <div class="input-group input-group-lg" ng-show="connectionForm.connectionUserName.$valid">
-                                <span class="input-group-addon fa fa-key"></span>
-                                <input type="password" class="form-control" aria-label="Password" name="password"
-                                       placeholder="Enter your password to confirm" ng-model="password"
-                                       required="true"/>
-                            </div>
                             <br/>
 
                             <div class="input-group input-group-lg pull-right">
                                 <button type="button" ng-show="connectionForm.connectionUserName.$valid"
-                                        class="btn btn-primary btn-lg"
-                                        ng-click="connect();">
+                                        class="btn btn-primary btn-lg" ng-click="setAction(connectionId, 'connect')">
                                     connect
                                 </button>
                             </div>
@@ -63,43 +51,74 @@
 
                     <div class="panel-body">
 
-                        <div class="list-group">
+                        <div class="list-group" ng-model="connections">
                             <div class="row list-group-item list-group-item-heading">
-                                <div class="col-xs-6">
+                                <div class="col-xs-2">
+                                    <h4>Username</h4>
+                                </div>
+                                <div class="col-xs-3 text-center">
                                     <h4>Name</h4>
                                 </div>
-                                <div class="col-xs-3 text-center">
+                                <div class="col-xs-2 text-center">
                                     <h4>Direction</h4>
                                 </div>
-                                <!--<div class="col-xs-2 text-center">-->
-                                <!--<h4>Confirmed</h4>-->
-                                <!--</div>-->
-                                <div class="col-xs-3 text-center">
+                                <div class="col-xs-2 text-center">
                                     <h4>Status</h4>
+                                </div>
+                                <div class="col-xs-3 text-center">
+                                    <h4>Action</h4>
                                 </div>
                             </div>
 
 
                             <div ng-repeat="connection in connections" class="row list-group-item">
-                                <div class="col-xs-6">
-                                    <span>{{connection.user.first_name + ' ' + connection.user.last_name + ' ("' + connection.user.username + '")'}}</span>
+                                <!--Username-->
+                                <div class="col-xs-2">
+                                    <span>{{connection.user.username}}</span>
                                 </div>
+                                <!--Name-->
                                 <div class="col-xs-3 text-center">
+                                    <span>{{connection.user.first_name + ' ' + connection.user.last_name}}</span>
+                                </div>
+                                <!--Direction-->
+                                <div class="col-xs-2 text-center">
                                     <span>{{connection.user.type == 'origin' ? 'received' : 'sent'}}</span>
                                 </div>
-                                <!--<div class="col-xs-2 text-center">-->
-                                <!--<i ng-class="connection.confirmed ? 'fa fa-2x fa-list-icon fa-check-circle-o' : 'fa fa-2x fa-list-icon fa-question-circle'"></i>-->
-                                <!--</div>-->
+                                <!--Status-->
+                                <div class="col-xs-2 text-center">
+                                    <i ng-show="connection.status == 'pending'"
+                                       class="fa fa-2x fa-list-icon fa-clock-o"></i>
+                                    <i ng-show="connection.status == 'connected'"
+                                       class="fa fa-2x fa-list-icon fa-link"></i>
+                                    <i ng-show="connection.status == 'rejected'"
+                                       class="fa fa-2x fa-list-icon fa-unlink"></i>
+                                    <i ng-show="connection.status == 'disconnected'"
+                                       class="fa fa-2x fa-list-icon fa-unlink"></i>
+                                </div>
+                                <!--Action-->
                                 <div class="col-xs-3 text-center">
                                     <!-- if connection.type is 'origin', it is an incoming request that I can approve -->
                                     <div ng-show="connection.user.type == 'origin'">
-                                        <!--<a href="" ng-click="confirm(connection.id)">Confirm</a>-->
-                                        <a href="" ui-turn-on="modal1">Confirm</a>
-                                        &nbsp; | &nbsp; <a href="" ng-click="reject(connection.id)">Reject</a>
-                                        <!--&nbsp; | &nbsp; <a href="" ng-click="delete(connection.id)">Delete</a>-->
+
+                                        <div ng-show="connection.status == 'pending'">
+                                            <a href="" ng-click="setAction(connection.id, 'confirm')">connect</a>
+                                            &nbsp; | &nbsp;
+                                            <a href="" ng-click="setAction(connection.id, 'reject')">reject</a>
+                                        </div>
+
+                                        <div ng-show="connection.status == 'connected'">
+                                            <a href="" ng-click="setAction(connection.id, 'disconnect')">disconnect</a>
+                                        </div>
+
                                     </div>
+                                    <!-- outgoing requests -->
                                     <div ng-show="connection.user.type == 'target'">
-                                        <i ng-class="connection.confirmed ? 'fa fa-2x fa-list-icon fa-check-circle-o' : 'fa fa-2x fa-list-icon fa-clock-o'"></i>
+                                        <div ng-show="connection.status == 'connected'">
+                                            <a href="" ng-click="setAction(connection.id, 'disconnect')">disconnect</a>
+                                        </div>
+                                        <div ng-show="connection.status != 'connected'">
+                                            -
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -111,38 +130,6 @@
             </div>
         </div>
     </div>
-
-    <modal redirect='true'></modal>
+    <modal redirect='false'></modal>
+    <credentials-modal></credentials-modal>
 </section>
-
-<div ui-content-for="modals">
-    <div class="modal" ui-if="modal1" ui-state='modal1'>
-        <div class="modal-backdrop in"></div>
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close"
-                            ui-turn-off="modal1">&times;</button>
-                    <h4 class="modal-title">Enter your password</h4>
-                </div>
-                <div class="modal-body">
-                    <form name="confirmationForm">
-                        <div class="input-group input-group-lg">
-
-                            <span class="input-group-addon fa fa-key"></span>
-                            <input type="password" class="form-control" aria-label="Password" name="password"
-                                   placeholder="Enter your password to confirm" ng-model="password"
-                                   required="true"/>
-
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button ui-turn-off="modal1" ng-show="confirmationForm.password.$valid"
-                            class="btn btn-primary">Confirm
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

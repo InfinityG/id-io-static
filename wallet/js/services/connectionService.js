@@ -91,7 +91,8 @@
 
             return {
                 "digest": digest.toString('base64'),
-                "signature": signature.toString('base64')
+                "signature": signature.toString('base64'),
+                "status":"connected"
             };
         }
 

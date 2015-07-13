@@ -43,7 +43,7 @@
                         message: 'User registration successful!',
                         userName: userName
                     });
-
+x
                     // now do a signed login
                     var signedChallenge = signatureService.sign(userName, password, regResponse.challenge.data);
                     var loginData = {username: userName, challenge: signedChallenge, domain: loginDomain};

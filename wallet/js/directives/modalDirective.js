@@ -6,7 +6,7 @@
             replace: true,
             scope:{redirect:'='},
             controller: 'ModalController',
-            template: '<div ui-content-for="modals">' +
+            template: '<div ui-content-for="info-modals">' +
             '<div class="modal" ng-if="show">' +
             '<div class="modal-backdrop in">' +
             '</div>' +

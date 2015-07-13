@@ -25,7 +25,7 @@
             .when('/connections', {
                 controller: 'ConnectionController',
                 templateUrl: 'connections.html',
-                reloadOnSearch: false
+                reloadOnSearch: true
             })
             .when('/wallet', {
                 controller: 'WalletController',
