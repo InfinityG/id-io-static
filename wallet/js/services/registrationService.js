@@ -40,12 +40,6 @@
                     // generate a wallet
                     walletService.generateWallet(userName, password, encodedPublicKey, rawSecretKey);
 
-                    $rootScope.$broadcast('registrationEvent', {
-                        type: 'Success',
-                        message: 'User registration successful!',
-                        userName: userName
-                    });
-
                     // now do a signed login
                     var signedChallenge = signatureService.sign(userName, password, regResponse.challenge.data);
                     var loginData = {username: userName, challenge: signedChallenge, domain: loginDomain};
@@ -57,10 +51,13 @@
                             sessionStorageService.saveAuthToken(userName, loginResponse.external_id,
                                 loginResponse.external_id, loginResponse.role, loginResponse.token);
 
-                            $rootScope.$broadcast('loginEvent', {
-                                type: 'Success',
-                                userName: userName,
-                                userId: loginResponse.external_id
+                            // invoke modal
+                            $rootScope.$broadcast('modalEvent', {
+                                type: 'User successfully registered',
+                                message: "You have successfully registered. You have been automatically logged in.",
+                                status: 0,
+                                redirect : true,
+                                redirectUrl : '/'
                             });
                         });
                 });

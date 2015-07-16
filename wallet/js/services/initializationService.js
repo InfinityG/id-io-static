@@ -49,6 +49,7 @@
         factory.setupListener = function() {
             $rootScope.$on('loginEvent', function (event, args) {
                 connectionService.refreshConnections();
+                $location.path('/');
             });
 
             $rootScope.$on('logoutEvent', function (event, args) {

@@ -21,10 +21,13 @@
             var userExists = localStorageService.getBlob(userName) != null;
 
             if (!userExists) {
-                $rootScope.$broadcast('loginEvent', {
+                // invoke modal
+                $rootScope.$broadcast('modalEvent', {
                     type: 'Error',
                     message: "User cannot be found! Ensure you are registered and that your username is correct " +
-                    "(if you need to restore your wallet, use the 'restore' link)."
+                    "(if you need to restore your wallet, use the 'restore' link).",
+                    redirect : true,
+                    redirectUrl : '/login'
                 });
 
                 return false;
@@ -65,11 +68,7 @@
                                 sessionStorageService.saveAuthToken(userName, loginResponse.external_id,
                                     loginResponse.external_id, loginResponse.role, loginResponse.token);
 
-                                $rootScope.$broadcast('loginEvent', {
-                                    userName: userName,
-                                    userId: loginResponse.external_id,
-                                    role: loginResponse.role
-                                });
+                                $rootScope.$broadcast('loginEvent', {});
                             });
                     });
             }
@@ -94,10 +93,12 @@
                     //var data = response.data;
                     walletService.updateWallet(userName, newPassword, encodedPublicKey, rawSecretKey);
 
-                    $rootScope.$broadcast('walletUpdateEvent', {
-                        type: 'Success',
-                        status: response.status,
-                        message: 'Wallet successfully updated'
+                    // invoke modal
+                    $rootScope.$broadcast('modalEvent', {
+                        type: 'Wallet updated',
+                        message: "Wallet successfully updated",
+                        redirect : true,
+                        redirectUrl : '/'
                     });
                 });
         };

@@ -19,47 +19,13 @@
             }
         };
 
-        var errorEventListener = $rootScope.$on('errorEvent', function (event, args) {
-            $scope.showModal(args.type, args.message, 0, false, null);
-        });
-
-        var unauthorizedEventListener = $rootScope.$on('unauthorizedEvent', function (event, args) {
-            $scope.showModal(args.type, args.message, 0, true, '/login');
-        });
-
-        var loginEventListener = $rootScope.$on('loginEvent', function (event, args) {
-            if (args.type == 'Error')
-                $scope.showModal(args.type, args.message, 0, true, '/login');
-        });
-
-        var registrationEventListener = $rootScope.$on('registrationEvent', function (event, args) {
-            if (args.type == 'Error')
-                $scope.showModal(args.type, args.message, 0, true, '/register');
-            else
-                $scope.showModal(args.type, args.message, 0, true, '/');
-        });
-
-        var walletUpdateEventListener = $rootScope.$on('walletUpdateEvent', function (event, args) {
-            $scope.showModal(args.type, args.message, 0, true, '/');
-        });
-
-        var connectionConfirmedEventListener = $rootScope.$on('connectionConfirmedEvent', function (event, args) {
-            $scope.showModal(args.type, args.message, 0, true, '/connections');
-        });
-
-        var encryptionEventListener = $rootScope.$on('encryptionEvent', function (event, args) {
-            $scope.showModal(args.type, args.message, 0, true, '/login');
+        var genericEventListener = $rootScope.$on('modalEvent', function (event, args) {
+            $scope.showModal(args.type, args.message, args.status, args.redirect, args.redirectUrl);
         });
 
         //clean up rootScope listeners
         $scope.$on('$destroy', function () {
-            errorEventListener();
-            unauthorizedEventListener();
-            loginEventListener();
-            registrationEventListener();
-            walletUpdateEventListener();
-            connectionConfirmedEventListener();
-            encryptionEventListener();
+            genericEventListener();
         });
 
         $scope.showModal = function(type, message, status, redirect, redirectUri) {

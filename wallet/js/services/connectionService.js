@@ -23,12 +23,6 @@
                 .then(function (response) {
                     var data = response.data;
                     localStorageService.saveConnections(context.userName, data);
-
-                    $rootScope.$broadcast('connectionEvent', {
-                        type: 'Success',
-                        status: response.status,
-                        message: 'Connections updated'
-                    });
                 });
         };
 
@@ -41,10 +35,12 @@
                     var data = response.data;
                     localStorageService.saveConnection(context.userName, data);
 
-                    $rootScope.$broadcast('connectionCreatedEvent', {
-                        type: 'Success',
-                        status: response.status,
-                        message: 'Connection confirmed'
+                    // invoke modal
+                    $rootScope.$broadcast('modalEvent', {
+                        type: 'Connection created',
+                        message: "Connection successfully created",
+                        redirect : true,
+                        redirectUrl : '/connections'
                     });
                 });
         };
@@ -58,10 +54,12 @@
                     var data = response.data;
                     localStorageService.saveConnection(context.userName, data);
 
-                    $rootScope.$broadcast('connectionConfirmedEvent', {
-                        type: 'Success',
-                        status: response.status,
-                        message: 'Connection successfully ' + status
+                    // invoke modal
+                    $rootScope.$broadcast('modalEvent', {
+                        type: 'Connection updated',
+                        message: "Connection successfully updated",
+                        redirect : false,
+                        redirectUrl : null
                     });
                 });
         };

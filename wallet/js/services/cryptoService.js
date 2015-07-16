@@ -60,28 +60,35 @@
          ***************************************/
 
         function raiseDecryptionError() {
-            //event for modals
-            $rootScope.$broadcast('encryptionEvent', {
+            // invoke modal
+            $rootScope.$broadcast('modalEvent', {
                 type: 'Error',
+                message: "Decryption error!",
                 status: 0,
-                message: "Decryption error!"
+                redirect : false,
+                redirectUrl : null
             });
         }
 
         function raiseEncryptionError() {
-            //event for modals
-            $rootScope.$broadcast('encryptionEvent', {
+            // invoke modal
+            $rootScope.$broadcast('modalEvent', {
                 type: 'Error',
+                message: "Encryption error",
                 status: 0,
-                message: "Decryption error!"
+                redirect : false,
+                redirectUrl : null
             });
         }
 
         function raisePasswordError() {
-            //event for modals
-            $rootScope.$broadcast('encryptionEvent', {
+            // invoke modal
+            $rootScope.$broadcast('modalEvent', {
                 type: 'Error',
-                message: "Invalid password!"
+                message: "Invalid password!",
+                status: 0,
+                redirect : true,
+                redirectUrl : '/login'
             });
         }
 

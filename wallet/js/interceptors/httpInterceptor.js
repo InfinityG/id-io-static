@@ -15,26 +15,34 @@
             },
             'responseError': function (rejection) {
                 switch (rejection.status) {
-                    case 401:
-                        $rootScope.$broadcast('unauthorizedEvent', {
-                                type: 'Error',
-                                status: rejection.status,
-                                message: rejection.data
-                            }
-                        );
-                        break;
-                    case 0:
-                        $rootScope.$broadcast('contractEvent', {
+                    case 401:   //unauthorized
+                        // invoke modal
+                        $rootScope.$broadcast('modalEvent', {
                             type: 'Error',
+                            message: rejection.data,
                             status: rejection.status,
-                            message: 'No connection!'
+                            redirect : true,
+                            redirectUrl : '/login'
                         });
                         break;
-                    default :
-                        $rootScope.$broadcast('errorEvent', {
+                    case 0: // no connection
+                        // invoke modal
+                        $rootScope.$broadcast('modalEvent', {
                             type: 'Error',
+                            message: 'No connection',
                             status: rejection.status,
-                            message: rejection.data
+                            redirect : true,
+                            redirectUrl : '/login'
+                        });
+                        break;
+                    default :   // 500 errors
+                        // invoke modal
+                        $rootScope.$broadcast('modalEvent', {
+                            type: 'Error',
+                            message: rejection.data,
+                            status: rejection.status,
+                            redirect : false,
+                            redirectUrl : null
                         });
                         break;
                 }
