@@ -49,9 +49,9 @@
                 });
         };
 
-        factory.confirmConnection = function (connectionId, password) {
+        factory.updateConnection = function (connectionId, status, password) {
             var context = userService.getContext();
-            var requestData = generateConfirmationPayload(password);
+            var requestData = generateConfirmationPayload(status, password);
 
             return $http.post(identityBase + '/connections/' + connectionId, requestData, {headers: {'Authorization': context.token}})
                 .then(function (response) {
@@ -61,7 +61,7 @@
                     $rootScope.$broadcast('connectionConfirmedEvent', {
                         type: 'Success',
                         status: response.status,
-                        message: 'Connection confirmed'
+                        message: 'Connection successfully ' + status
                     });
                 });
         };
@@ -81,7 +81,7 @@
             };
         }
 
-        function generateConfirmationPayload(password) {
+        function generateConfirmationPayload(status, password) {
             var context = userService.getContext();
             var secret = keyService.getSecretKey(context.userName, password);
 
@@ -92,7 +92,7 @@
             return {
                 "digest": digest.toString('base64'),
                 "signature": signature.toString('base64'),
-                "status":"connected"
+                "status":status
             };
         }
 

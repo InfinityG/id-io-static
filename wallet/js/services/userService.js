@@ -4,10 +4,10 @@
 (function () {
 
     var injectParams = ['$http', '$location', '$rootScope', 'config', 'localStorageService',
-        'keyService', 'signatureService', 'sessionStorageService'];
+        'walletService', 'keyService', 'signatureService', 'sessionStorageService'];
 
     var userFactory = function ($http, $location, $rootScope, config, localStorageService,
-                                keyService, signatureService, sessionStorageService) {
+                                walletService, keyService, signatureService, sessionStorageService) {
 
         var identityBase = config.identityHost,
             loginDomain = config.loginDomain,
@@ -24,7 +24,7 @@
                 $rootScope.$broadcast('loginEvent', {
                     type: 'Error',
                     message: "User cannot be found! Ensure you are registered and that your username is correct " +
-                                "(if you need to restore your wallet, use the 'restore' link)."
+                    "(if you need to restore your wallet, use the 'restore' link)."
                 });
 
                 return false;
@@ -73,6 +73,33 @@
                             });
                     });
             }
+        };
+
+        factory.update = function (userName, originalPassword, newPassword, encodedPublicKey, rawSecretKey) {
+            // create the signature (sign the userName) - use the ORIGINAL keys for this
+            var sig = signatureService.sign(userName, originalPassword, userName);
+
+            // payload contains the new keys
+            var requestData = {
+                'password': newPassword,
+                'public_key': encodedPublicKey,
+                'digest': sig.digest,
+                'signature': sig.signature
+            };
+
+            var context = factory.getContext();
+
+            return $http.post(identityBase + '/users/' + userName, requestData, {headers: {'Authorization': context.token}})
+                .then(function (response) {
+                    //var data = response.data;
+                    walletService.updateWallet(userName, newPassword, encodedPublicKey, rawSecretKey);
+
+                    $rootScope.$broadcast('walletUpdateEvent', {
+                        type: 'Success',
+                        status: response.status,
+                        message: 'Wallet successfully updated'
+                    });
+                });
         };
 
         return factory;

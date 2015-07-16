@@ -4,7 +4,7 @@
         return {
             restrict: 'E',
             replace: true,
-            scope:{redirect:'='},
+            scope:{},
             controller: 'ModalController',
             template: '<div ui-content-for="info-modals">' +
             '<div class="modal" ng-if="show">' +

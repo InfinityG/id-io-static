@@ -7,6 +7,7 @@
         $scope.message = null;
         $scope.type = null;
         $scope.status = null;
+        $scope.redirect = false;
         $scope.redirectUri = '/';
 
         $scope.cancelModal = function () {
@@ -19,35 +20,35 @@
         };
 
         var errorEventListener = $rootScope.$on('errorEvent', function (event, args) {
-            showModal(args.type, args.message, 0, null);
+            $scope.showModal(args.type, args.message, 0, false, null);
         });
 
         var unauthorizedEventListener = $rootScope.$on('unauthorizedEvent', function (event, args) {
-            showModal(args.type, args.message, 0, '/login');
+            $scope.showModal(args.type, args.message, 0, true, '/login');
         });
 
         var loginEventListener = $rootScope.$on('loginEvent', function (event, args) {
             if (args.type == 'Error')
-                showModal(args.type, args.message, 0, '/login');
+                $scope.showModal(args.type, args.message, 0, true, '/login');
         });
 
         var registrationEventListener = $rootScope.$on('registrationEvent', function (event, args) {
             if (args.type == 'Error')
-                showModal(args.type, args.message, 0, '/register');
+                $scope.showModal(args.type, args.message, 0, true, '/register');
             else
-                showModal(args.type, args.message, 0, '/');
+                $scope.showModal(args.type, args.message, 0, true, '/');
         });
 
         var walletUpdateEventListener = $rootScope.$on('walletUpdateEvent', function (event, args) {
-            showModal(args.type, args.message, 0, '/');
+            $scope.showModal(args.type, args.message, 0, true, '/');
         });
 
         var connectionConfirmedEventListener = $rootScope.$on('connectionConfirmedEvent', function (event, args) {
-            showModal(args.type, args.message, 0, '/connections');
+            $scope.showModal(args.type, args.message, 0, true, '/connections');
         });
 
         var encryptionEventListener = $rootScope.$on('encryptionEvent', function (event, args) {
-            showModal(args.type, args.message, 0, '/login');
+            $scope.showModal(args.type, args.message, 0, true, '/login');
         });
 
         //clean up rootScope listeners
@@ -61,7 +62,7 @@
             encryptionEventListener();
         });
 
-        function showModal(type, message, status, redirectUri) {
+        $scope.showModal = function(type, message, status, redirect, redirectUri) {
             if (message.errors != null) {
                 var errorMessage = '';
 
@@ -77,8 +78,9 @@
             $scope.show = true;
             $scope.type = type;
             $scope.status = status;
+            $scope.redirect = redirect;
             $scope.redirectUri = redirectUri;
-        }
+        };
     };
 
     ModalController.$inject = injectParams;

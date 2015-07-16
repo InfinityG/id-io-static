@@ -13,11 +13,21 @@
             return localStorageService.getWallet(userName);
         };
 
-        factory.generateWallet = function (userName, password, publicKey, secretKey) {
+        factory.generateWallet = function (userName, password, encodedPublicKey, rawSecretKey) {
             var cryptoKey = keyService.generateAESKey(password, nacl);
-            var encryptedSecret = cryptoService.encryptSecret(cryptoKey, secretKey);
-            console.debug(encryptedSecret);
-            var wallet = {keys: {pk: publicKey.toString('base64'), sk: encryptedSecret}};
+            var encryptedSecret = cryptoService.encryptSecret(cryptoKey, rawSecretKey);
+            var wallet = {keys: {pk: encodedPublicKey, sk: encryptedSecret}};
+
+            localStorageService.saveWallet(userName, wallet);
+        };
+
+        factory.updateWallet = function(userName, password, encodedPublicKey, rawSecretKey){
+            var cryptoKey = keyService.generateAESKey(password, nacl);
+            var encryptedSecret = cryptoService.encryptSecret(cryptoKey, rawSecretKey);
+
+            var wallet = factory.getWallet(userName);
+            wallet.keys.pk = encodedPublicKey;
+            wallet.keys.sk = encryptedSecret;
 
             localStorageService.saveWallet(userName, wallet);
         };

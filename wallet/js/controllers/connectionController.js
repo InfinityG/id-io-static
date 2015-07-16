@@ -52,16 +52,18 @@
         }
 
         function confirm(password) {
-            connectionService.confirmConnection($scope.connectionId, password);
+            connectionService.updateConnection($scope.connectionId, 'connected', password);
             refreshConnections();
         }
 
         function disconnect(password) {
-            console.debug('Disconnect not implemented!');
+            connectionService.updateConnection($scope.connectionId, 'disconnected', password);
+            refreshConnections();
         }
 
         function reject(password) {
-            console.debug('Reject not implemented!');
+            connectionService.updateConnection($scope.connectionId, 'rejected', password);
+            refreshConnections();
         }
 
         function refreshConnections(){

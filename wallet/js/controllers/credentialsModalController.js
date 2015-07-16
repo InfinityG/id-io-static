@@ -8,44 +8,44 @@
         $scope.credentials = {password: null};
 
         $scope.cancelModal = function () {
-            hideModal();
+            $scope.hideModal();
         };
 
         var credentialsEventListener = $rootScope.$on('enterCredentialsEvent', function (event, args) {
-            showModal();
+            $scope.showModal();
         });
 
         $scope.credentialsEntered = function () {
-            if (validate()) {
+            if ($scope.validate()) {
 
                 $rootScope.$broadcast('credentialsEnteredEvent', {
                     credentials: $scope.credentials
                 });
 
-                hideModal();
+                $scope.hideModal();
             } else {
                 $scope.passwordError = true;
             }
         };
 
-        function validate() {
+        $scope.validate = function() {
             $scope.passwordError = false;
             var context = userService.getContext();
             return keyService.validateCredentials(context.userName, $scope.credentials.password);
-        }
+        };
 
         //clean up rootScope listeners
         $scope.$on('$destroy', function () {
             credentialsEventListener();
         });
 
-        function hideModal() {
+        $scope.hideModal = function() {
             $scope.show = false;
             $scope.credentials = {password: null};
             $scope.passwordError = false;
-        }
+        };
 
-        function showModal() {
+        $scope.showModal = function() {
             $scope.show = true;
         }
     };

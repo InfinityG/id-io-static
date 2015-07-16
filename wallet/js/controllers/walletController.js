@@ -6,116 +6,71 @@
     var WalletController = function ($scope, $rootScope, $location, $routeParams, $window, config, userService,
                                      keyService, cryptoService, localStorageService) {
 
-        $scope.currentWallet = null;
-        $scope.currentKeyPair = null;
-        $scope.publicKey = null;
-        $scope.secretKey = null;
+        $scope.encodedPublicKey = null;
+        $scope.rawSecretKey = null;
+        $scope.encodedSecretKey = null;
+
         $scope.cryptoKey = null;
 
         $scope.userValidated = false;
-        $scope.passwordValidated = false;
         $scope.userName = null;
+
         $scope.password = null;
+        $scope.passwordValidated = false;
+        $scope.newPassword = null;
 
         function init() {
             var context = userService.getContext();
 
-            if (context != null)
+            if (context != null) {
                 $scope.userName = context.userName;
-            else
+            } else
                 $location.path('/login');
         }
 
-        $scope.goRegister = function () {
-            $location.path('/register')
+        var credentialsEnteredEventListener = $rootScope.$on('credentialsEnteredEvent', function (event, args) {
+            credentialsEntered(args.credentials);
+        });
+
+        $scope.showKeys = function () {
+            //now invoke the credentials modal
+            $rootScope.$broadcast('enterCredentialsEvent', {});
         };
 
-        $scope.login = function (userName, password) {
-            $scope.loadUserWallet(userName);
-            userService.login(userName, password);
+        function credentialsEntered(credentials) {
+            $scope.password = credentials.password;
+            $scope.newPassword = credentials.password;
+            $scope.passwordValidated = true;
+            $scope.loadUserWallet();
+        }
 
-            //$scope.loadUserWallet(userName);
-            //
-            //if ($scope.currentWallet != null) {
-            //    $scope.validatePassword(password);
-            //} else {
-            //    $rootScope.$broadcast('loginEvent', {
-            //        type: 'Error',
-            //        status: 0,
-            //        message: "Invalid user!"
-            //    });
-            //    return;
-            //}
-            //
-            //if ($scope.passwordValidated)
-            //    $rootScope.$broadcast('loginEvent', {userName: userName});
-            //else
-            //    $scope.reset();
-        };
-
-        $scope.reset = function () {
-            $scope.userName = null;
-            $scope.password = null;
-            $scope.currentWallet = null;
-            $scope.currentKeyPair = null;
-            $scope.publicKey = null;
-            $scope.secretKey = null;
-        };
-
-        $scope.loadUserWallet = function (userName) {
-            var wallet = localStorageService.getWallet(userName);
+        $scope.loadUserWallet = function () {
+            var wallet = localStorageService.getWallet($scope.userName);
 
             if (wallet != null) {
-                $scope.userName = userName;
-                $scope.currentWallet = wallet;
-                $scope.currentKeyPair = wallet.keys;
-                $scope.publicKey = wallet.keys.pk;
-                $scope.secretKey = wallet.keys.sk;
+                $scope.encodedPublicKey = wallet.keys.pk;   //the public key is stored encoded
+                $scope.rawSecretKey = keyService.getSecretKey($scope.userName, $scope.password);
+                $scope.encodedSecretKey = $scope.rawSecretKey.toString('base64');
             }
-        };
-
-        $scope.validatePassword = function (password) {
-            var cryptoKey = keyService.generateAESKey(password, config.nacl);
-
-            if (cryptoService.validateAESKey(cryptoKey, $scope.secretKey)) {
-                $scope.passwordValidated = true;
-                $scope.cryptoKey = cryptoKey;
-                $scope.loadDecryptedSecret(cryptoKey, $scope.secretKey);
-            } else {
-                $scope.password = null;
-                $scope.passwordValidated = false;
-                $scope.cryptoKey = null;
-            }
-        };
-
-        $scope.loadDecryptedSecret = function (cryptoKey, encryptedSecret) {
-            $scope.secretKey = cryptoService.decryptString(cryptoKey, encryptedSecret);
         };
 
         $scope.regenerateKeys = function () {
-            var pair = keyService.generateSigningKeyPair();
-            $scope.publicKey = pair.pk.toString('base64');
-            $scope.secretKey = pair.sk.toString('base64');
+            var rawKeyPair = keyService.generateSigningKeyPair();
+
+            $scope.encodedPublicKey = rawKeyPair.pk.toString('base64');
+            $scope.rawSecretKey = rawKeyPair.sk;
+            $scope.encodedSecretKey = $scope.rawSecretKey.toString('base64');
         };
 
         $scope.saveWallet = function () {
-            //re-encrypt the secret (with the new password if it has changed)
-            $scope.cryptoKey = keyService.generateAESKey($scope.password, config.nacl);
-            var encryptedSecret = cryptoService.encryptString($scope.cryptoKey, $scope.secretKey);
-
-            if (encryptedSecret != null) {
-                $scope.currentWallet.keys.sk = encryptedSecret;
-                $scope.currentWallet.keys.pk = $scope.publicKey;
-
-                localStorageService.saveWallet($scope.userName, $scope.currentWallet);
-
-                $rootScope.$broadcast('walletUpdateEvent', {
-                    type: 'Success',
-                    message: 'Wallet updated!',
-                    userName: $scope.userName
-                });
-            }
+            userService.update($scope.userName, $scope.password, $scope.newPassword,
+                                $scope.encodedPublicKey, $scope.rawSecretKey);
         };
+
+        //clean up rootScope listeners
+        $scope.$on('$destroy', function () {
+            credentialsEnteredEventListener();
+        });
 
         init();
     };

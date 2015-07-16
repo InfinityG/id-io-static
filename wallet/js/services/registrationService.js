@@ -17,14 +17,16 @@
             return keyService.generateSigningKeyPair();
         };
 
-        factory.register = function (firstName, lastName, userName, password, publicKey, secretKey) {
+        factory.register = function (firstName, lastName, userName, password, rawPublicKey, rawSecretKey) {
+
+            var encodedPublicKey = rawPublicKey.toString('base64');
 
             var userData = {
                 first_name: firstName,
                 last_name: lastName,
                 username: userName,
                 password: password,
-                public_key: publicKey.toString('base64')
+                public_key: encodedPublicKey
             };
 
             //note: errors handled by httpInterceptor
@@ -36,14 +38,14 @@
                     blobService.initializeBlob(userName);
 
                     // generate a wallet
-                    walletService.generateWallet(userName, password, publicKey, secretKey);
+                    walletService.generateWallet(userName, password, encodedPublicKey, rawSecretKey);
 
                     $rootScope.$broadcast('registrationEvent', {
                         type: 'Success',
                         message: 'User registration successful!',
                         userName: userName
                     });
-x
+
                     // now do a signed login
                     var signedChallenge = signatureService.sign(userName, password, regResponse.challenge.data);
                     var loginData = {username: userName, challenge: signedChallenge, domain: loginDomain};

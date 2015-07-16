@@ -8,11 +8,6 @@
 
         <div class="list-group" ui-turn-off='uiSidebarLeft' ng-hide="currentRole != null">
 
-            <!--<a class="list-group-item" href="#/register">-->
-                    <!--<i class="fa fa-lg fa-user"></i>-->
-                    <!--<span class="fa fa-lg">&nbsp;register</span>-->
-                    <!--<i class="fa fa-lg fa-chevron-right pull-right"></i>-->
-            <!--</a>-->
             <h4 ng-show="context == null">
                 <a class="list-group-item" href="#/login">
                         <i class="fa fa-user"></i>
@@ -21,18 +16,18 @@
             </h4>
 
             <h4 ng-show="context != null">
-                <a class="list-group-item" href="#/wallet">
-                        <!--<i class="fa"><img class="wallet-icon-small" src="../images/wallet.svg"> </i>-->
-                        <i class="fa fa-key"></i>
-                        <span>&nbsp;my keys</span>
+                <a class="list-group-item" href="#/connections">
+                    <!--<i class="fa fa-lg fa-cloud"></i>-->
+                    <i class="fa fa-lg fa-link"></i>
+                    <span>&nbsp;my connections</span>
                 </a>
             </h4>
 
             <h4 ng-show="context != null">
-            <a class="list-group-item" href="#/connections">
-                    <!--<i class="fa fa-lg fa-cloud"></i>-->
-                    <i class="fa fa-lg fa-link"></i>
-                    <span>&nbsp;my connections</span>
+                <a class="list-group-item" href="#/wallet">
+                        <!--<i class="fa"><img class="wallet-icon-small" src="../images/wallet.svg"> </i>-->
+                        <i class="fa fa-key"></i>
+                        <span>&nbsp;my wallet</span>
                 </a>
             </h4>
 

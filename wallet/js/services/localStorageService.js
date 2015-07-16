@@ -71,7 +71,7 @@
                 var result = blob.connections;
 
                 result.sort(function (a, b) {
-                    return a.user.first_name < b.user.first_name.toLowerCase();
+                    return a.user.first_name.toLowerCase() > b.user.first_name.toLowerCase();
                 });
 
                 return result;

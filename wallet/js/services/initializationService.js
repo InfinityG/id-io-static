@@ -48,24 +48,12 @@
         //TODO: clean up $rootScope listeners
         factory.setupListener = function() {
             $rootScope.$on('loginEvent', function (event, args) {
-                //factory.start(args.key);
                 connectionService.refreshConnections();
-                $location.path('/')
             });
 
             $rootScope.$on('logoutEvent', function (event, args) {
                 $location.path('/');
             });
-
-            //$rootScope.$on('registrationEvent', function (event, args) {
-            //    contextService.createContext({userName : args.userName, cryptoKey : args.key});
-            //
-            //    // automatic login when registered
-            //    $rootScope.$broadcast('loginEvent', {userName: args.userName});
-            //
-            //    //$location.path('/');
-            //
-            //});
         };
 
         return factory;
