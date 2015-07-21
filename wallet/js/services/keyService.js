@@ -1,7 +1,7 @@
 (function () {
-    var injectParams = ['config', 'localStorageService', 'cryptoService', 'sessionStorageService'];
+    var injectParams = ['$rootScope', 'config', 'localStorageService', 'cryptoService', 'sessionStorageService'];
 
-    var keyFactory = function (config, localStorageService, cryptoService, sessionStorageService) {
+    var keyFactory = function ($rootScope, config, localStorageService, cryptoService, sessionStorageService) {
 
         var nacl = config.nacl, factory = {};
 
@@ -51,13 +51,46 @@
          */
 
         factory.generateAESKey = function (password, salt) {
-            return cryptoUtil.AES.generateAESKey(password, salt);
+            return cryptoService.generateAESKey(password, salt);
         };
 
         factory.validateCredentials = function(userName, password){
-            var encryptedSecret = factory.getSigningKeyPair(userName).sk;
-            var cryptoKey = cryptoService.generateAESKey(password, nacl);
-            return cryptoService.validateAESKey(cryptoKey, encryptedSecret);
+            var userExists = localStorageService.getBlob(userName) != null;
+
+            if (!userExists) {
+                // invoke modal
+                $rootScope.$broadcast('modalEvent', {
+                    type: 'Error',
+                    message: "User cannot be found. Do you need to restore your wallet?",
+                    redirect : true,
+                    redirectUrl : '/login'
+                });
+
+                return false;
+            }
+
+            var decryptedSecret = factory.getSecretKey(userName, password);
+
+            //generate a signature and validate it
+            var wallet = localStorageService.getWallet(userName);
+            var keyString = JSON.stringify(wallet.keys);
+            var digest = cryptoService.createMessageDigest(keyString);
+            var signature = cryptoService.signMessage(digest, decryptedSecret);
+
+            //now validate
+            var isValid = cryptoService.validateSignature(digest, signature, wallet.keys.pk);
+
+            if(!isValid){
+                // invoke modal
+                $rootScope.$broadcast('modalEvent', {
+                    type: 'Access denied',
+                    message: "Please ensure that your credentials are correct.",
+                    redirect : true,
+                    redirectUrl : '/login'
+                });
+            }
+
+            return isValid;
         };
 
         return factory;

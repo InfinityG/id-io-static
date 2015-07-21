@@ -16,16 +16,36 @@
         factory.generateWallet = function (userName, password, encodedPublicKey, rawSecretKey) {
             var cryptoKey = keyService.generateAESKey(password, nacl);
             var encryptedSecret = cryptoService.encryptSecret(cryptoKey, rawSecretKey);
-            var wallet = {keys: {pk: encodedPublicKey, sk: encryptedSecret}};
+
+            //create a signature and digest
+            var keyString = JSON.stringify({pk: encodedPublicKey, sk: encryptedSecret});
+            var digest = cryptoService.createMessageDigest(keyString);
+            var signature = cryptoService.signMessage(digest, rawSecretKey);
+
+            //create wallet
+            var wallet = {
+                signature: signature.toString('base64'),
+                keys: {
+                    pk: encodedPublicKey,
+                    sk: encryptedSecret
+                }
+            };
 
             localStorageService.saveWallet(userName, wallet);
         };
 
-        factory.updateWallet = function(userName, password, encodedPublicKey, rawSecretKey){
+        factory.updateWallet = function (userName, password, encodedPublicKey, rawSecretKey) {
             var cryptoKey = keyService.generateAESKey(password, nacl);
             var encryptedSecret = cryptoService.encryptSecret(cryptoKey, rawSecretKey);
 
             var wallet = factory.getWallet(userName);
+
+            //create a signature and digest
+            var keyString = JSON.stringify({pk: encodedPublicKey, sk: encryptedSecret});
+            var digest = cryptoService.createMessageDigest(keyString);
+            var signature = cryptoService.signMessage(digest, rawSecretKey);
+
+            wallet.signature = signature.toString('base64');
             wallet.keys.pk = encodedPublicKey;
             wallet.keys.sk = encryptedSecret;
 

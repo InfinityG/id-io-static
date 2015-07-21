@@ -10,7 +10,7 @@
                                         sessionStorageService) {
 
         var identityBase = config.identityHost,
-            loginDomain = config.loginDomain,
+            loginDomain = config.defaultDomain,
             factory = {};
 
         factory.generateKeys = function () {
@@ -51,13 +51,17 @@
                             sessionStorageService.saveAuthToken(userName, loginResponse.external_id,
                                 loginResponse.external_id, loginResponse.role, loginResponse.token);
 
+                            $rootScope.$broadcast('loginEvent', {redirect: false, redirectUrl: null});
+
                             // invoke modal
                             $rootScope.$broadcast('modalEvent', {
-                                type: 'User successfully registered',
-                                message: "You have successfully registered. You have been automatically logged in.",
+                                type: "Congratulations " + userName + "!",
+                                message: "You've successfully registered on ID-IO! If you forgot to save your keys, don't " +
+                                "worry, you can always find them in 'my wallet'. You will now be taken to 'my " +
+                                "connections' where you can connect to other users...",
                                 status: 0,
                                 redirect : true,
-                                redirectUrl : '/'
+                                redirectUrl : '/connections'
                             });
                         });
                 });

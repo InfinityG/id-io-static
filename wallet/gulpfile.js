@@ -14,8 +14,8 @@ var config = {
             './bower_components/angular/angular.js',
             './bower_components/angular-route/angular-route.js',
             './bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.js',
-            './bower_components/ig-js-utils/lib/ecdsa_bundle.js',
-            './bower_components/ig-js-utils/crypto/cryptoUtil.js'
+            './bower_components/ig-js-utils/src/lib/cryptoBundle.js',
+            './bower_components/ig-js-utils/src/crypto/cryptoUtil.js'
         ],
 
         fonts: [

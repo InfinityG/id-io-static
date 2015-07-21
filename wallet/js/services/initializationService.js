@@ -8,7 +8,8 @@
     var configValue = {
         //identityHost: 'https://id-io.infinity-g.com',
         identityHost: 'http://localhost:9002',
-        loginDomain: 'id-io',
+        defaultDomain: 'id-io',
+        domainAliases: {'id-io': 'ID-IO Wallet', 'accord.ly': 'Contract Designer'},
         confirmMobile: false,
         nacl: '9612700b954743e0b38f2faff35d264c',
         context: null
@@ -17,39 +18,41 @@
     var initializationFactory = function ($http, $rootScope, $location, contextService, connectionService, blobService) {
         var factory = {};
 
-        factory.init = function(){
+        factory.init = function () {
             factory.start(null);
             factory.setupListener();
         };
 
-        factory.start = function(key){
+        factory.start = function (key) {
             $http.defaults.withCredentials = false; //this is so that we can use '*' in allowed-origin
 
             var context = contextService.getContext();
 
-            if(context != null){
+            if (context != null) {
                 factory.initializeAuthHeaders(context);
                 factory.initializeBlob(context.userName);
             }
         };
 
-        factory.initializeAuthHeaders = function(context){
+        factory.initializeAuthHeaders = function (context) {
             $http.defaults.headers.common['Authorization'] = context.token;
             //$http.defaults.withCredentials = true;
         };
 
-        factory.initializeBlob = function(userName){
-            if(blobService.getBlob(userName) == null) {
+        factory.initializeBlob = function (userName) {
+            if (blobService.getBlob(userName) == null) {
                 var userBlob = blobService.getBlobTemplate();
                 blobService.saveBlob(userName, userBlob);
             }
         };
 
         //TODO: clean up $rootScope listeners
-        factory.setupListener = function() {
+        factory.setupListener = function () {
             $rootScope.$on('loginEvent', function (event, args) {
                 connectionService.refreshConnections();
-                $location.path('/');
+
+                if (args.redirect)
+                    $location.path(args.redirectUrl);
             });
 
             $rootScope.$on('logoutEvent', function (event, args) {

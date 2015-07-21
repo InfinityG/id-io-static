@@ -19,22 +19,22 @@
                 $location.path('/login');
         }
 
-        $scope.validatePassword = function () {
-            var keyPair = keyService.getSigningKeyPair();
-            var cryptoKey = keyService.generateAESKey($scope.password, config.nacl);
-
-            if (cryptoService.validateAESKey(cryptoKey, keyPair.sk)) {
-                $scope.passwordValidated = true;
-                $scope.cryptoKey = cryptoKey;
-
-                $scope.loadDecryptedSigningKeyPair(keyPair);
-                $scope.loadDecryptedWallet();
-            } else {
-                $scope.password = null;
-                $scope.passwordValidated = false;
-                $scope.cryptoKey = null;
-            }
-        };
+        //$scope.validatePassword = function () {
+        //    var keyPair = keyService.getSigningKeyPair();
+        //    var cryptoKey = keyService.generateAESKey($scope.password, config.nacl);
+        //
+        //    if (cryptoService.validateAESKey(cryptoKey, keyPair.sk)) {
+        //        $scope.passwordValidated = true;
+        //        $scope.cryptoKey = cryptoKey;
+        //
+        //        $scope.loadDecryptedSigningKeyPair(keyPair);
+        //        $scope.loadDecryptedWallet();
+        //    } else {
+        //        $scope.password = null;
+        //        $scope.passwordValidated = false;
+        //        $scope.cryptoKey = null;
+        //    }
+        //};
 
         $scope.regenerateKeyPair = function () {
             //encrypt the secret key and set it back

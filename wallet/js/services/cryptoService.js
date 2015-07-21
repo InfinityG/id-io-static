@@ -10,7 +10,11 @@
          ********************************/
 
         factory.generateAESKey = function (password, nacl) {
-            return cryptoUtil.AES.generateAESKey(password, nacl);
+            try {
+                return cryptoUtil.AES.generateAESKey(password, nacl);
+            }catch(e){
+                raiseKeyError();
+            }
         };
 
         factory.validateAESKey = function (cryptoKey, cipherText) {
@@ -55,9 +59,24 @@
             return cryptoUtil.ECDSA.signMessage(messageDigest, privateKeyBuffer);
         };
 
+        factory.validateSignature = function (messageDigest, signature, publicKey) {
+            return cryptoUtil.ECDSA.validateSignature(messageDigest, signature, publicKey);
+        };
+
         /***************************************
          Error events
          ***************************************/
+
+        function raiseKeyError() {
+            // invoke modal
+            $rootScope.$broadcast('modalEvent', {
+                type: 'Error',
+                message: "Key error!",
+                status: 0,
+                redirect : false,
+                redirectUrl : null
+            });
+        }
 
         function raiseDecryptionError() {
             // invoke modal

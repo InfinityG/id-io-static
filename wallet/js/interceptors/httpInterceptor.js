@@ -18,8 +18,9 @@
                     case 401:   //unauthorized
                         // invoke modal
                         $rootScope.$broadcast('modalEvent', {
-                            type: 'Error',
-                            message: rejection.data,
+                            type: 'Unauthorized access',
+                            //message: rejection.data,
+                            message: 'Access denied - please ensure your credentials are correct',
                             status: rejection.status,
                             redirect : true,
                             redirectUrl : '/login'

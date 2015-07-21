@@ -3,14 +3,14 @@
  */
 (function () {
 
-    var injectParams = ['$http', '$location', '$rootScope', 'config', 'localStorageService',
+    var injectParams = ['$http', '$window', '$location', '$rootScope', 'config', 'localStorageService',
         'walletService', 'keyService', 'signatureService', 'sessionStorageService'];
 
-    var userFactory = function ($http, $location, $rootScope, config, localStorageService,
+    var userFactory = function ($http, $window, $location, $rootScope, config, localStorageService,
                                 walletService, keyService, signatureService, sessionStorageService) {
 
         var identityBase = config.identityHost,
-            loginDomain = config.loginDomain,
+            loginDomain = config.defaultDomain,
             factory = {};
 
         factory.getContext = function () {
@@ -18,22 +18,6 @@
         };
 
         factory.validateCredentials = function (userName, password) {
-            var userExists = localStorageService.getBlob(userName) != null;
-
-            if (!userExists) {
-                // invoke modal
-                $rootScope.$broadcast('modalEvent', {
-                    type: 'Error',
-                    message: "User cannot be found! Ensure you are registered and that your username is correct " +
-                    "(if you need to restore your wallet, use the 'restore' link).",
-                    redirect : true,
-                    redirectUrl : '/login'
-                });
-
-                return false;
-            }
-
-            // this will also raise an event if the password does not validate
             return keyService.validateCredentials(userName, password);
         };
 
@@ -44,7 +28,7 @@
         };
 
         //note: errors handled by httpInterceptor
-        factory.login = function (userName, password) {
+        factory.login = function (userName, password, domain) {
 
             // validate the credentials before we do anything
             if (factory.validateCredentials(userName, password)) {
@@ -58,17 +42,31 @@
                         //sign the challenge
                         var challengeResponse = response.data;
                         var signedChallenge = signatureService.sign(userName, password, challengeResponse.data);
-                        var loginData = {username: userName, challenge: signedChallenge, domain: loginDomain};
+                        var shouldRedirect = !!((domain != null) && (domain != ''));
+
+                        console.debug('Domain: ' + domain);
+
+                        var loginData = {
+                            username: userName,
+                            challenge: signedChallenge,
+                            domain: ((domain != null) && (domain != '')) ? domain : loginDomain,
+                            redirect: shouldRedirect
+                        };
 
                         //now login
                         $http.post(identityBase + '/login', loginData, {'withCredentials': false})
                             .then(function (response) {
                                 var loginResponse = response.data;
 
-                                sessionStorageService.saveAuthToken(userName, loginResponse.external_id,
-                                    loginResponse.external_id, loginResponse.role, loginResponse.token);
+                                if(shouldRedirect) {
+                                    console.debug('Redirect uri: ' + loginResponse.redirect_uri);
+                                    $window.location.href = loginResponse.redirect_uri;
+                                }else {
+                                    sessionStorageService.saveAuthToken(userName, loginResponse.external_id,
+                                        loginResponse.external_id, loginResponse.role, loginResponse.token);
 
-                                $rootScope.$broadcast('loginEvent', {});
+                                    $rootScope.$broadcast('loginEvent', {redirect: true, redirectUrl: '/connections'});
+                                }
                             });
                     });
             }

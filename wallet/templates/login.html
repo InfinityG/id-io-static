@@ -32,8 +32,6 @@
                                               Username is required!
                                         </span>
 
-                            <br/>
-
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon fa fa-key"></span>
                                 <input type="password" class="form-control" name="password"
@@ -46,124 +44,37 @@
                                               Password is required!
                                         </span>
 
+                            <div class="input-group input-group-lg">
+
+                                <span class="input-group-addon btn fa fa-cloud dropdown-toggle" data-toggle="dropdown"
+                                      ui-turn-on="domainDropdown"></span>
+                                <ul class="dropdown-menu" role="menu"
+                                    ui-show="domainDropdown"
+                                    ui-state="domainDropdown"
+                                    ui-turn-off="domainDropdown">
+                                    <li class="selected"><a ng-click="domainSelected('id-io')">Default (ID-IO
+                                        Wallet)</a></li>
+                                    <li><a ng-click="domainSelected('accord.ly')">Contract Designer</a></li>
+                                </ul>
+
+                                <input type="text" class="form-control" disabled aria-label="..."
+                                       value="{{domain != null ? domainAliases[domain] : 'ID-IO Wallet'}}">
+                            </div>
+
                             <div class="input-group input-group-lg pull-right" ng-show="loginForm.$valid">
-                                <br/>
                                 <button type="button" class="btn btn-primary btn-lg"
-                                        ng-click="login(userName, password);">login
+                                        ng-click="login();">login
                                 </button>
                             </div>
                         </form>
 
-                        <br/>
-                        <span>Need to <a href="#/restore">restore</a> your wallet?</span>
-                        <br/>
+                        <!--<br/>-->
+                        <!--<span>Need to <a href="#/restore">restore</a> your wallet?</span>-->
                         <span>Don't have an identity? <a href="#/register">Register</a></span>
 
                     </div>
                 </div>
 
-                <div class="panel panel-default" ng-model="context" ng-show="passwordValidated == true">
-
-                    <div class="panel-heading justified">
-                        <span class="fa fa-pencil fa-2x"></span>
-                        <span class="fa fa-2x text-right">my details</span>
-                    </div>
-
-                    <div class="panel-body">
-                        <!--<div class="input-group input-group-lg">-->
-                        <h5>
-                            Your wallet details. You cannot change your username; however you can change your password,
-                            or regenerate your signing keys.
-                        </h5>
-                        <!--</div>-->
-
-                        <form name="updateForm">
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-addon fa fa-user"></span>
-                                <input type="text" class="form-control" aria-label="Username" name="userName"
-                                       placeholder="Username" ng-model="userName" disabled/>
-
-                            </div>
-
-                            <br/>
-
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-addon fa fa-key"></span>
-                                <input type="password" class="form-control" aria-label="Password"
-                                       name="password"
-                                       placeholder="Password" ng-model="password" required="true"
-                                       ng-minlength="5" ng-maxlength="20"/>
-                                <span class="input-group-addon fa fa-question-circle"></span>
-
-                            </div>
-                                     <span style="color:red"
-                                           ng-show="updateForm.password.$dirty && updateForm.password.$invalid">
-                                              Invalid password
-                                        </span>
-
-                            <br/>
-
-                            <!-- Keys -->
-
-                            <div class="panel panel-default">
-
-                                <div class="panel-heading justified">
-                                    <span class="fa fa-key fa-2x"></span>
-                                    <span class="fa fa-2x text-right">your keys</span>
-                                </div>
-                                <div class="panel-body">
-                                    <h5>
-                                        Please make sure that you make a copy of these keys and save them in a secure location.
-                                        You will need them if you ever need to restore your wallet.
-                                    </h5>
-
-                                    <div class="input-group input-group-lg">
-                                        <span class="input-group-addon fa fa-key">&nbsp;public</span>
-                                        <input type="text" class="form-control" placeholder="Public key"
-                                               aria-label="PublicKey" name="publicKey" required="true"
-                                               ng-model="publicKey" disabled/>
-                                        <span class="input-group-addon fa fa-copy"></span>
-                                    </div>
-
-                                    <br/>
-
-                                    <div class="input-group input-group-lg">
-                                        <span class="input-group-addon fa fa-key">&nbsp;secret</span>
-                                        <input type="text" class="form-control" placeholder="Secret key"
-                                               aria-label="SecretKey" name="secretKey" required="true"
-                                               ng-model="secretKey" disabled/>
-                                        <span class="input-group-addon fa fa-copy"></span>
-                                    </div>
-
-
-                                    <div class="input-group input-group-lg pull-right">
-                                        <button type="button"
-                                                class="btn btn-default btn-lg"
-                                                ng-click="regenerateKeys();">
-                                            regenerate keys
-                                        </button>
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-                            <!--</div>-->
-
-
-                            <!--</div>-->
-
-                            <div class="input-group input-group-lg pull-right">
-                                <button type="button" ng-show="updateForm.$valid"
-                                        class="btn btn-primary btn-lg"
-                                        ng-click="saveWallet();">
-                                    save
-                                </button>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

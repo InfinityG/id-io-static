@@ -13,7 +13,7 @@
             if(userService.getContext() == null)
                 $location.path('/login');
 
-            refreshConnections();
+            $scope.connections = connectionService.getConnections();
         }
 
         var credentialsEnteredEventListener = $rootScope.$on('credentialsEnteredEvent', function (event, args) {
@@ -47,27 +47,28 @@
         }
 
         function connect(password) {
-            connectionService.createConnection($scope.connectionUserName, password);
-            refreshConnections();
+            connectionService.createConnection($scope.connectionUserName, password, refreshConnections);
         }
 
         function confirm(password) {
-            connectionService.updateConnection($scope.connectionId, 'connected', password);
-            refreshConnections();
+            connectionService.updateConnection($scope.connectionId, 'connected', password, refreshConnections);
         }
 
         function disconnect(password) {
-            connectionService.updateConnection($scope.connectionId, 'disconnected', password);
-            refreshConnections();
+            connectionService.updateConnection($scope.connectionId, 'disconnected', password, refreshConnections);
         }
 
         function reject(password) {
-            connectionService.updateConnection($scope.connectionId, 'rejected', password);
-            refreshConnections();
+            connectionService.updateConnection($scope.connectionId, 'rejected', password, refreshConnections);
         }
 
         function refreshConnections(){
             $scope.connections = connectionService.getConnections();
+            $scope.connectionUserName = null;
+            $scope.action = null;
+            $scope.connectionId = null;
+
+            $scope.connectionForm.$setPristine();
         }
 
         //clean up rootScope listeners

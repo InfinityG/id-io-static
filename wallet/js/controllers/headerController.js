@@ -7,8 +7,7 @@
         $scope.userName = null;
 
         function init(){
-            var context = userService.getContext();
-            $scope.userName = context == null ? null : context.userName;
+            loadUserName();
         }
 
         $scope.logout = function(){
@@ -19,13 +18,18 @@
         };
 
         var loginEventListener = $rootScope.$on('loginEvent', function (event, args) {
-            $scope.userName = args.userName;
+            loadUserName();
         });
 
         //clean up rootScope listener
         $scope.$on('$destroy', function() {
             loginEventListener();
         });
+
+        function loadUserName(){
+            var context = userService.getContext();
+            $scope.userName = context == null ? null : context.userName;
+        }
 
         init();
     };

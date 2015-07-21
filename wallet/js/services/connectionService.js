@@ -26,7 +26,7 @@
                 });
         };
 
-        factory.createConnection = function (connectionUserName, password) {
+        factory.createConnection = function (connectionUserName, password, callbackFunc) {
             var context = userService.getContext();
             var requestData = generateCreationPayload(connectionUserName, password);
 
@@ -34,18 +34,19 @@
                 .then(function (response) {
                     var data = response.data;
                     localStorageService.saveConnection(context.userName, data);
+                    callbackFunc();
 
                     // invoke modal
                     $rootScope.$broadcast('modalEvent', {
                         type: 'Connection created',
                         message: "Connection successfully created",
-                        redirect : true,
-                        redirectUrl : '/connections'
+                        redirect : false,
+                        redirectUrl : null
                     });
                 });
         };
 
-        factory.updateConnection = function (connectionId, status, password) {
+        factory.updateConnection = function (connectionId, status, password, callbackFunc) {
             var context = userService.getContext();
             var requestData = generateConfirmationPayload(status, password);
 
@@ -53,6 +54,7 @@
                 .then(function (response) {
                     var data = response.data;
                     localStorageService.saveConnection(context.userName, data);
+                    callbackFunc();
 
                     // invoke modal
                     $rootScope.$broadcast('modalEvent', {

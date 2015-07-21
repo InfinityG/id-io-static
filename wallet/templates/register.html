@@ -20,10 +20,10 @@
 
                     <div class="panel-body">
                         <!--<div class="input-group input-group-lg">-->
-                            <h5>
-                                Registration will create a new identity for you on the blockchain. It will also
-                                create an encrypted offline wallet in your browser storage to keep your keys safe.
-                            </h5>
+                        <h5>
+                            Registration will create a new identity for you on the blockchain. It will also
+                            create an encrypted offline wallet in your browser storage to keep your keys safe.
+                        </h5>
                         <!--</div>-->
 
                         <form name="registrationForm">
@@ -38,8 +38,6 @@
                                               Invalid first name
                                         </span>
 
-                            <br/>
-
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon fa fa-user"></span>
                                 <input type="text" class="form-control" aria-label="Last name" name="lastName"
@@ -51,8 +49,6 @@
                                               Invalid last name
                                         </span>
 
-                            <br/>
-
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon fa fa-user"></span>
                                 <input type="text" class="form-control" aria-label="Username" name="userName"
@@ -63,8 +59,6 @@
                                           ng-show="registrationForm.userName.$dirty && registrationForm.userName.$invalid">
                                               Invalid username
                                         </span>
-
-                            <br/>
 
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon fa fa-key"></span>
@@ -80,8 +74,6 @@
                                               Invalid password
                                         </span>
 
-                            <br/>
-
                             <!-- Keys -->
 
                             <div class="panel panel-default" ng-show="context == null;">
@@ -92,7 +84,8 @@
                                 </div>
                                 <div class="panel-body">
                                     <h5>
-                                        Please make sure that you make a copy of these keys and save them in a secure location.
+                                        Please make sure that you make a copy of these keys and save them in a secure
+                                        location.
                                         You will need them if you ever need to restore your wallet.
                                     </h5>
 
@@ -104,8 +97,6 @@
                                         <span class="input-group-addon fa fa-copy"></span>
                                     </div>
 
-                                    <br/>
-
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon fa fa-key">&nbsp;secret</span>
                                         <input type="text" class="form-control" placeholder="Secret key"
@@ -114,23 +105,8 @@
                                         <span class="input-group-addon fa fa-copy" ng-click="test()"></span>
                                     </div>
 
-
-                                    <!--<div class="input-group input-group-lg pull-right">-->
-                                        <!--<button type="button"-->
-                                                <!--class="btn btn-default btn-lg"-->
-                                                <!--ng-click="generateKeys();">-->
-                                            <!--generate keys-->
-                                        <!--</button>-->
-                                    <!--</div>-->
-
                                 </div>
-
-
                             </div>
-                            <!--</div>-->
-
-
-                            <!--</div>-->
 
                             <div class="input-group input-group-lg pull-right">
                                 <button type="button" ng-show="registrationForm.$valid"

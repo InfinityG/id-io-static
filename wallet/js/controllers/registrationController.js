@@ -1,8 +1,8 @@
 (function () {
 
-    var injectParams = ['$scope', '$location', '$routeParams', '$window', 'userService', 'localStorageService', 'registrationService'];
+    var injectParams = ['$scope', '$location', 'userService', 'registrationService'];
 
-    var RegistrationController = function ($scope, $location, $routeParams, $window, userService, localStorageService, registrationService) {
+    var RegistrationController = function ($scope, $location, userService, registrationService) {
 
         $scope.firstName = null;
         $scope.lastName = null;
